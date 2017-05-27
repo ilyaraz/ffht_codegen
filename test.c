@@ -1,12 +1,30 @@
 #include <immintrin.h>
 
-#include <time.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include "routine.h"
 
+void dumb_fht(float *buf, int log_n) {
+    int n = 1 << log_n;
+    for (int i = 0; i < log_n; ++i) {
+        int s1 = 1 << i;
+        int s2 = s1 << 1;
+        for (int j = 0; j < n; j += s2) {
+            for (int k = 0; k < s1; ++k) {
+                float u = buf[j + k];
+                float v = buf[j + k + s1];
+                buf[j + k] = u + v;
+                buf[j + k + s1] = u - v;
+            }
+        }
+    }
+}
+
 int main(void) {
+    srand(4057218);
     int log_n;
     scanf("%d", &log_n);
     int n = 1 << log_n;
@@ -14,6 +32,21 @@ int main(void) {
     void *start = buf;
     while ((size_t)start % 32) ++start;
     float *a = (float*)start;
+    float *aux = (float*)malloc(sizeof(float) * n);
+    for (int i = 0; i < n; ++i) {
+        a[i] = 1.0 - 2.0 * (rand() % 2);
+        aux[i] = a[i];
+    }
+    fht(a, log_n);
+    dumb_fht(aux, log_n);
+    double max_error = 0.0;
+    for (int i = 0; i < n; ++i) {
+        double error = fabs(a[i] - aux[i]);
+        if (error > max_error) {
+            max_error = error;
+        }
+    }
+    printf("error: %.10e\n", max_error);
     for (int num_it = 10;; num_it *= 2) {
         clock_t tt1 = clock();
         for (int it = 0; it < num_it; ++it) {
@@ -26,5 +59,7 @@ int main(void) {
             break;
         }
     }
+    free(buf);
+    free(aux);
     return 0;
 }
