@@ -1,3 +1,40 @@
+def avx_gen_iter_0(from_register, to_register, aux_registers, ident=''):
+    if len(aux_registers) != 4:
+        raise Exception('need four auxiliary registers')
+    res  = ident + '"vpermilps $160, %s, %s\\n"\n' % (from_register, aux_registers[0])
+    res += ident + '"vpermilps $245, %s, %s\\n"\n' % (from_register, aux_registers[1])
+    res += ident + '"vxorps %s, %s, %s\\n"\n' % (aux_registers[2], aux_registers[2], aux_registers[2])
+    res += ident + '"vsubps %s, %s, %s\\n"\n' % (aux_registers[1], aux_registers[2], aux_registers[3])
+    res += ident + '"vaddsubps %s, %s, %s\\n"\n' % (aux_registers[3], aux_registers[0], to_register)
+    return res
+
+def avx_gen_iter_1(from_register, to_register, aux_registers, ident=''):
+    if len(aux_registers) != 5:
+        raise Exception('need five auxiliary registers')
+    res  = ident + '"vpermilps $68, %s, %s\\n"\n' % (from_register, aux_registers[0])
+    res += ident + '"vpermilps $238, %s, %s\\n"\n' % (from_register, aux_registers[1])
+    res += ident + '"vxorps %s, %s, %s\\n"\n' % (aux_registers[2], aux_registers[2], aux_registers[2])
+    res += ident + '"vsubps %s, %s, %s\\n"\n' % (aux_registers[1], aux_registers[2], aux_registers[3])
+    res += ident + '"vblendps $204, %s, %s, %s\\n"\n' % (aux_registers[3], aux_registers[1], aux_registers[4])
+    res += ident + '"vaddps %s, %s, %s\\n"\n' % (aux_registers[0], aux_registers[4], to_register)
+    return res
+
+def avx_gen_iter_2(from_register, to_register, aux_registers, ident=''):
+    if len(aux_registers) != 4:
+        raise Exception('need four auxiliary registers')
+    res  = ident + '"vxorps %s, %s, %s\\n"\n' % (aux_registers[0], aux_registers[0], aux_registers[0])
+    res += ident + '"vsubps %s, %s, %s\\n"\n' % (from_register, aux_registers[0], aux_registers[1])
+    res += ident + '"vperm2f128 $0, %s, %s, %s\\n"\n' % (from_register, from_register, aux_registers[2])
+    res += ident + '"vperm2f128 $49, %s, %s, %s\\n"\n' % (aux_registers[1], from_register, aux_registers[3])
+    res += ident + '"vaddps %s, %s, %s\\n"\n' % (aux_registers[2], aux_registers[3], to_register)
+    return res
+
+def avx_gen_iter_3_etc(from_register_1, from_register_2, to_register_1, to_register_2, ident=''):
+    res  = ident + '"vaddps %s, %s, %s\\n"\n' % (from_register_2, from_register_1, to_register_1)
+    res += ident + '"vsubps %s, %s, %s\\n"\n' % (from_register_2, from_register_1, to_register_2)
+    return res
+
+
 def generate_step(log_n, it, regime):
     if log_n <= 0:
         raise Exception("log_n must be positive")
@@ -22,44 +59,48 @@ def generate_step(log_n, it, regime):
         return res
     if regime == "avx":
         if it == 0:
-            res  = "  for (int j = 0; j < %d; j += 8) {\n" % n
-            res += "    __m256 A = _mm256_load_ps(buf + j);\n"
-            res += "    __m256 B = _mm256_permute_ps(A, (2 << 4) | (2 << 6));\n"
-            res += "    __m256 C = _mm256_permute_ps(A, 1 | (1 << 2) | (3 << 4) | (3 << 6));\n"
-            res += "    __m256 D = _mm256_sub_ps(ZERO, C);\n"
-            res += "    __m256 E = _mm256_addsub_ps(B, D);\n"
-            res += "    _mm256_store_ps(buf + j, E);\n"
-            res += "  }\n"
+            res  = '  for (int j = 0; j < %d; j += 8) {\n' % n
+            res += '    __asm__ volatile (\n'
+            res += '      "vmovups (%0), %%ymm0\\n"\n'
+            res += avx_gen_iter_0('%%ymm0', '%%ymm5', ['%%ymm1', '%%ymm2', '%%ymm3', '%%ymm4'], '      ')
+            res += '      "vmovups %%ymm5, (%0)\\n"\n'
+            res += '      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"\n'
+            res += '    );\n'
+            res += '  }\n'
             return res
         if it == 1:
-            res  = "  for (int j = 0; j < %d; j += 8) {\n" % n
-            res += "    __m256 E = _mm256_load_ps(buf + j);\n"
-            res += "    __m256 A = _mm256_permute_ps(E, (1 << 2) | (1 << 6));\n"
-            res += "    __m256 B = _mm256_permute_ps(E, 2 | (3 << 2) | (2 << 4) | (3 << 6));\n"
-            res += "    __m256 C = _mm256_sub_ps(ZERO, B);\n"
-            res += "    __m256 D = _mm256_blend_ps(B, C, (1 << 2) | (1 << 3) | (1 << 6) | (1 << 7));\n"
-            res += "    E = _mm256_add_ps(A, D);\n"
-            res += "    _mm256_store_ps(buf + j, E);\n"
-            res += "  }\n"
+            res  = '  for (int j = 0; j < %d; j += 8) {\n' % n
+            res += '    __asm__ volatile (\n'
+            res += '      "vmovups (%0), %%ymm0\\n"\n'
+            res += avx_gen_iter_1('%%ymm0', '%%ymm6', ['%%ymm1', '%%ymm2', '%%ymm3', '%%ymm4', '%%ymm5'], '      ')
+            res += '      "vmovups %%ymm6, (%0)\\n"\n'
+            res += '      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"\n'
+            res += '    );\n'
+            res += '  }\n'
             return res
         if it == 2:
-            res  = "  for (int j = 0; j < %d; j += 8) {\n" % n
-            res += "    __m256 E = _mm256_load_ps(buf + j);\n"
-            res += "    __m256 B = _mm256_sub_ps(ZERO, E);\n"
-            res += "    __m256 C = _mm256_permute2f128_ps(E, E, 0);\n"
-            res += "    __m256 D = _mm256_permute2f128_ps(E, B, 1 | (3 << 4));\n"
-            res += "    E = _mm256_add_ps(C, D);\n"
-            res += "    _mm256_store_ps(buf + j, E);\n"
-            res += "  }\n"
+            res  = '  for (int j = 0; j < %d; j += 8) {\n' % n
+            res += '    __asm__ volatile (\n'
+            res += '      "vmovups (%0), %%ymm0\\n"\n'
+            res += avx_gen_iter_2('%%ymm0', '%%ymm5', ['%%ymm1', '%%ymm2', '%%ymm3', '%%ymm4'], '      ')
+            res += '      "vmovups %%ymm5, (%0)\\n"\n'
+            res += '      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"\n'
+            res += '    );\n'
+            res += '  }\n'
             return res
-        res  = "  for (int j = 0; j < %d; j += %d) {\n" % (n, 1 << (it + 1))
-        res += "    for (int k = 0; k < %d; k += 8) {\n" % (1 << it)
-        res += "      __m256 uu = _mm256_load_ps(buf + j + k);\n"
-        res += "      __m256 vv = _mm256_load_ps(buf + j + k + %d);\n" % (1 << it)
-        res += "      _mm256_store_ps(buf + j + k, _mm256_add_ps(uu, vv));\n"
-        res += "      _mm256_store_ps(buf + j + k + %d, _mm256_sub_ps(uu, vv));\n" % (1 << it)
-        res += "    }\n"
-        res += "  }\n"
+        res  = '  for (int j = 0; j < %d; j += %d) {\n' % (n, 1 << (it + 1))
+        res += '    for (int k = 0; k < %d; k += 8) {\n' % (1 << it)
+        res += '      __asm__ volatile (\n'
+        res += '        "vmovups (%0), %%ymm0\\n"\n'
+        res += '        "vmovups (%1), %%ymm1\\n"\n'
+        res += avx_gen_iter_3_etc('%%ymm0', '%%ymm1', '%%ymm2', '%%ymm3', '        ')
+        res += '        "vmovups %%ymm2, (%0)\\n"\n'
+        res += '        "vmovups %%ymm3, (%1)\\n"\n'
+        res += '        :: "r" (buf + j + k), "r" (buf + j + k + %d) : ' % (1 << it)
+        res += '"%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"\n'
+        res += '      );\n'
+        res += '    }\n'
+        res += '  }\n'
         return res
     raise Exception("not supported regime")
 
@@ -76,8 +117,6 @@ def generate_steps(log_n, from_it, to_it, regime):
         raise Exception("invalid regime")
     n = 1 << log_n
     res  = "inline void steps_%d_%d_%d(float *buf) {\n" % (log_n, from_it, to_it)
-    if regime == "avx":
-        res += "  __m256 ZERO = _mm256_set_ps(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);\n"
     for i in range(from_it, to_it):
         res += generate_step(log_n, i, regime)
     res += "}\n"
