@@ -28,318 +28,521 @@ inline void steps_2_0_2(float *buf) {
   }
 }
 
-inline void steps_3_0_3(float *buf) {
+inline void steps_3(float *buf) {
   for (int j = 0; j < 8; j += 8) {
     __asm__ volatile (
       "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 8; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 8; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
+      "vpermilps $160, %%ymm0, %%ymm8\n"
+      "vpermilps $245, %%ymm0, %%ymm9\n"
+      "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+      "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+      "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+      "vpermilps $68, %%ymm0, %%ymm8\n"
+      "vpermilps $238, %%ymm0, %%ymm9\n"
+      "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+      "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+      "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+      "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+      "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+      "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+      "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+      "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+      "vmovups %%ymm0, (%0)\n"
+      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
     );
   }
 }
 
-inline void steps_4_0_4(float *buf) {
-  for (int j = 0; j < 16; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 16; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 16; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
+inline void steps_4(float *buf) {
   for (int j = 0; j < 16; j += 16) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_5_0_5(float *buf) {
-  for (int j = 0; j < 32; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 32; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 32; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 32; j += 16) {
-    for (int k = 0; k < 8; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
+inline void steps_5(float *buf) {
   for (int j = 0; j < 32; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
+    for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_6_0_6(float *buf) {
-  for (int j = 0; j < 64; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 64; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 64; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 64; j += 16) {
-    for (int k = 0; k < 8; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 64; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
+inline void steps_6(float *buf) {
   for (int j = 0; j < 64; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
+    for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_7_0_7(float *buf) {
-  for (int j = 0; j < 128; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 128; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 128; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 128; j += 16) {
+inline void steps_7(float *buf) {
+  for (int j = 0; j < 128; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 128; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 128; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -348,352 +551,662 @@ inline void steps_7_0_7(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_8_0_8(float *buf) {
-  for (int j = 0; j < 256; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 256; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 256; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 256; j += 16) {
+inline void steps_8(float *buf) {
+  for (int j = 0; j < 256; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 256; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 256; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 256; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 256; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_9_0_9(float *buf) {
-  for (int j = 0; j < 512; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 512; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 512; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 512; j += 16) {
+inline void steps_9(float *buf) {
+  for (int j = 0; j < 512; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 512; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 512; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 512; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 512; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 512; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_10_0_10(float *buf) {
-  for (int j = 0; j < 1024; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 1024; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 1024; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 1024; j += 16) {
+inline void steps_10(float *buf) {
+  for (int j = 0; j < 1024; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1024; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1024; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1024; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1024; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1024; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -702,469 +1215,803 @@ inline void steps_10_0_10(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_11_0_11(float *buf) {
-  for (int j = 0; j < 2048; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 2048; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 2048; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 2048; j += 16) {
+inline void steps_11(float *buf) {
+  for (int j = 0; j < 2048; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2048; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2048; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2048; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2048; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 2048; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2048; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 2048; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_12_0_12(float *buf) {
-  for (int j = 0; j < 4096; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 4096; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 4096; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 4096; j += 16) {
+inline void steps_12(float *buf) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4096; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4096; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4096; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4096; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 4096; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4096; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4096; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 4096; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_13_0_13(float *buf) {
-  for (int j = 0; j < 8192; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 8192; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 8192; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 8192; j += 16) {
+inline void steps_13(float *buf) {
+  for (int j = 0; j < 8192; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8192; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8192; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8192; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8192; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8192; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8192; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8192; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8192; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -1173,586 +2020,944 @@ inline void steps_13_0_13(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_14_0_14(float *buf) {
-  for (int j = 0; j < 16384; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 16384; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 16384; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 16384; j += 16) {
+inline void steps_14(float *buf) {
+  for (int j = 0; j < 16384; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16384; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16384; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16384; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16384; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16384; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16384; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16384; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16384; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16384; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16384; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_15_0_15(float *buf) {
-  for (int j = 0; j < 32768; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 32768; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 32768; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 32768; j += 16) {
+inline void steps_15(float *buf) {
+  for (int j = 0; j < 32768; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 32768; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 32768; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 32768; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 32768; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_16_0_16(float *buf) {
-  for (int j = 0; j < 65536; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 65536; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 65536; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 65536; j += 16) {
+inline void steps_16(float *buf) {
+  for (int j = 0; j < 65536; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 65536; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 65536; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 65536; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 65536; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -1761,703 +2966,1085 @@ inline void steps_16_0_16(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_17_0_17(float *buf) {
-  for (int j = 0; j < 131072; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 131072; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 131072; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 131072; j += 16) {
+inline void steps_17(float *buf) {
+  for (int j = 0; j < 131072; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 131072; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 131072; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 131072; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 131072; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 131072; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_18_0_18(float *buf) {
-  for (int j = 0; j < 262144; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 262144; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 262144; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 262144; j += 16) {
+inline void steps_18(float *buf) {
+  for (int j = 0; j < 262144; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 262144; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 262144; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 262144; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 262144; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 262144; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_19_0_19(float *buf) {
-  for (int j = 0; j < 524288; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 524288; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 524288; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 524288; j += 16) {
+inline void steps_19(float *buf) {
+  for (int j = 0; j < 524288; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 524288; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 524288; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 524288; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 524288; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 524288; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -2466,820 +4053,1226 @@ inline void steps_19_0_19(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_20_0_20(float *buf) {
-  for (int j = 0; j < 1048576; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 1048576; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 1048576; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 1048576; j += 16) {
+inline void steps_20(float *buf) {
+  for (int j = 0; j < 1048576; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1048576; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1048576; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1048576; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1048576; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1048576; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1048576; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_21_0_21(float *buf) {
-  for (int j = 0; j < 2097152; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 2097152; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 2097152; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 2097152; j += 16) {
+inline void steps_21(float *buf) {
+  for (int j = 0; j < 2097152; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 2097152; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 2097152; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 2097152; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 2097152; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 2097152; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 2097152; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_22_0_22(float *buf) {
-  for (int j = 0; j < 4194304; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 4194304; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 4194304; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 4194304; j += 16) {
+inline void steps_22(float *buf) {
+  for (int j = 0; j < 4194304; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 4194304; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 4194304; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 4194304; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 4194304; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 4194304; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 4194304; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -3288,937 +5281,1367 @@ inline void steps_22_0_22(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_23_0_23(float *buf) {
-  for (int j = 0; j < 8388608; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 8388608; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 8388608; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 8388608; j += 16) {
+inline void steps_23(float *buf) {
+  for (int j = 0; j < 8388608; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8388608; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8388608; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8388608; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8388608; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8388608; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 8388608; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 8388608; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_24_0_24(float *buf) {
-  for (int j = 0; j < 16777216; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 16777216; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 16777216; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 16777216; j += 16) {
+inline void steps_24(float *buf) {
+  for (int j = 0; j < 16777216; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16777216; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16777216; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16777216; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16777216; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16777216; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 16777216; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 16777216; j += 16777216) {
-    for (int k = 0; k < 8388608; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8388608) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456), "r"(buf + j + k + 8388608), "r"(buf + j + k + 10485760), "r"(buf + j + k + 12582912), "r"(buf + j + k + 14680064) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_25_0_25(float *buf) {
-  for (int j = 0; j < 33554432; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 33554432; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 33554432; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 33554432; j += 16) {
+inline void steps_25(float *buf) {
+  for (int j = 0; j < 33554432; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 33554432; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 33554432; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 33554432; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 33554432; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 33554432; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 33554432; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 33554432; j += 16777216) {
-    for (int k = 0; k < 8388608; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8388608) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456), "r"(buf + j + k + 8388608), "r"(buf + j + k + 10485760), "r"(buf + j + k + 12582912), "r"(buf + j + k + 14680064) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -4227,1054 +6650,1508 @@ inline void steps_25_0_25(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16777216) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 16777216) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_26_0_26(float *buf) {
-  for (int j = 0; j < 67108864; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 67108864; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 67108864; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 67108864; j += 16) {
+inline void steps_26(float *buf) {
+  for (int j = 0; j < 67108864; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 67108864; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 67108864; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 67108864; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 67108864; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 67108864; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 67108864; j += 16777216) {
-    for (int k = 0; k < 8388608; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8388608) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 67108864; j += 33554432) {
-    for (int k = 0; k < 16777216; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16777216) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456), "r"(buf + j + k + 8388608), "r"(buf + j + k + 10485760), "r"(buf + j + k + 12582912), "r"(buf + j + k + 14680064) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 67108864; j += 67108864) {
-    for (int k = 0; k < 33554432; k += 8) {
+    for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 33554432) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 16777216), "r"(buf + j + k + 33554432), "r"(buf + j + k + 50331648) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_27_0_27(float *buf) {
-  for (int j = 0; j < 134217728; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 134217728; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 134217728; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 134217728; j += 16) {
+inline void steps_27(float *buf) {
+  for (int j = 0; j < 134217728; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 134217728; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 134217728; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 134217728; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 134217728; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 134217728; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 134217728; j += 16777216) {
-    for (int k = 0; k < 8388608; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8388608) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 33554432) {
-    for (int k = 0; k < 16777216; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16777216) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 134217728; j += 67108864) {
-    for (int k = 0; k < 33554432; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 33554432) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456), "r"(buf + j + k + 8388608), "r"(buf + j + k + 10485760), "r"(buf + j + k + 12582912), "r"(buf + j + k + 14680064) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 134217728; j += 134217728) {
-    for (int k = 0; k < 67108864; k += 8) {
+    for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 67108864) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 16777216), "r"(buf + j + k + 33554432), "r"(buf + j + k + 50331648), "r"(buf + j + k + 67108864), "r"(buf + j + k + 83886080), "r"(buf + j + k + 100663296), "r"(buf + j + k + 117440512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_28_0_28(float *buf) {
-  for (int j = 0; j < 268435456; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 268435456; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 268435456; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 268435456; j += 16) {
+inline void steps_28(float *buf) {
+  for (int j = 0; j < 268435456; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 268435456; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 268435456; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 268435456; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 268435456; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 268435456; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 268435456; j += 16777216) {
-    for (int k = 0; k < 8388608; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8388608) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 33554432) {
-    for (int k = 0; k < 16777216; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16777216) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 268435456; j += 67108864) {
-    for (int k = 0; k < 33554432; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 33554432) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456), "r"(buf + j + k + 8388608), "r"(buf + j + k + 10485760), "r"(buf + j + k + 12582912), "r"(buf + j + k + 14680064) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 268435456; j += 134217728) {
-    for (int k = 0; k < 67108864; k += 8) {
+    for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 67108864) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 16777216), "r"(buf + j + k + 33554432), "r"(buf + j + k + 50331648), "r"(buf + j + k + 67108864), "r"(buf + j + k + 83886080), "r"(buf + j + k + 100663296), "r"(buf + j + k + 117440512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -5283,780 +8160,1095 @@ inline void steps_28_0_28(float *buf) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 134217728) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 134217728) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_29_0_29(float *buf) {
-  for (int j = 0; j < 536870912; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 536870912; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 536870912; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 536870912; j += 16) {
+inline void steps_29(float *buf) {
+  for (int j = 0; j < 536870912; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 16777216) {
-    for (int k = 0; k < 8388608; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8388608) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 33554432) {
-    for (int k = 0; k < 16777216; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16777216) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 67108864) {
-    for (int k = 0; k < 33554432; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 33554432) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456), "r"(buf + j + k + 8388608), "r"(buf + j + k + 10485760), "r"(buf + j + k + 12582912), "r"(buf + j + k + 14680064) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 134217728) {
-    for (int k = 0; k < 67108864; k += 8) {
+    for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 67108864) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 536870912; j += 268435456) {
-    for (int k = 0; k < 134217728; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 134217728) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 16777216), "r"(buf + j + k + 33554432), "r"(buf + j + k + 50331648), "r"(buf + j + k + 67108864), "r"(buf + j + k + 83886080), "r"(buf + j + k + 100663296), "r"(buf + j + k + 117440512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 536870912; j += 536870912) {
-    for (int k = 0; k < 268435456; k += 8) {
+    for (int k = 0; k < 134217728; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 268435456) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vmovups %%ymm0, (%0)\n"
+        "vmovups %%ymm1, (%1)\n"
+        "vmovups %%ymm2, (%2)\n"
+        "vmovups %%ymm3, (%3)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 134217728), "r"(buf + j + k + 268435456), "r"(buf + j + k + 402653184) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
 }
 
-inline void steps_30_0_30(float *buf) {
-  for (int j = 0; j < 1073741824; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $160, %%ymm0, %%ymm1\n"
-      "vpermilps $245, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vaddsubps %%ymm4, %%ymm1, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 1073741824; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vpermilps $68, %%ymm0, %%ymm1\n"
-      "vpermilps $238, %%ymm0, %%ymm2\n"
-      "vxorps %%ymm3, %%ymm3, %%ymm3\n"
-      "vsubps %%ymm2, %%ymm3, %%ymm4\n"
-      "vblendps $204, %%ymm4, %%ymm2, %%ymm5\n"
-      "vaddps %%ymm1, %%ymm5, %%ymm6\n"
-      "vmovups %%ymm6, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "memory"
-    );
-  }
-  for (int j = 0; j < 1073741824; j += 8) {
-    __asm__ volatile (
-      "vmovups (%0), %%ymm0\n"
-      "vxorps %%ymm1, %%ymm1, %%ymm1\n"
-      "vsubps %%ymm0, %%ymm1, %%ymm2\n"
-      "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm3\n"
-      "vperm2f128 $49, %%ymm2, %%ymm0, %%ymm4\n"
-      "vaddps %%ymm3, %%ymm4, %%ymm5\n"
-      "vmovups %%ymm5, (%0)\n"
-      :: "r"(buf + j) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "memory"
-    );
-  }
-  for (int j = 0; j < 1073741824; j += 16) {
+inline void steps_30(float *buf) {
+  for (int j = 0; j < 1073741824; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 32) {
-    for (int k = 0; k < 16; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 64) {
-    for (int k = 0; k < 32; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 128) {
-    for (int k = 0; k < 64; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 64) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 256) {
-    for (int k = 0; k < 128; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 128) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vpermilps $160, %%ymm0, %%ymm8\n"
+        "vpermilps $245, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm0\n"
+        "vpermilps $160, %%ymm1, %%ymm8\n"
+        "vpermilps $245, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm1\n"
+        "vpermilps $160, %%ymm2, %%ymm8\n"
+        "vpermilps $245, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm2\n"
+        "vpermilps $160, %%ymm3, %%ymm8\n"
+        "vpermilps $245, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm3\n"
+        "vpermilps $160, %%ymm4, %%ymm8\n"
+        "vpermilps $245, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm4\n"
+        "vpermilps $160, %%ymm5, %%ymm8\n"
+        "vpermilps $245, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm5\n"
+        "vpermilps $160, %%ymm6, %%ymm8\n"
+        "vpermilps $245, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm6\n"
+        "vpermilps $160, %%ymm7, %%ymm8\n"
+        "vpermilps $245, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vaddsubps %%ymm11, %%ymm8, %%ymm7\n"
+        "vpermilps $68, %%ymm0, %%ymm8\n"
+        "vpermilps $238, %%ymm0, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm0\n"
+        "vpermilps $68, %%ymm1, %%ymm8\n"
+        "vpermilps $238, %%ymm1, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm1\n"
+        "vpermilps $68, %%ymm2, %%ymm8\n"
+        "vpermilps $238, %%ymm2, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm2\n"
+        "vpermilps $68, %%ymm3, %%ymm8\n"
+        "vpermilps $238, %%ymm3, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm3\n"
+        "vpermilps $68, %%ymm4, %%ymm8\n"
+        "vpermilps $238, %%ymm4, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm4\n"
+        "vpermilps $68, %%ymm5, %%ymm8\n"
+        "vpermilps $238, %%ymm5, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm5\n"
+        "vpermilps $68, %%ymm6, %%ymm8\n"
+        "vpermilps $238, %%ymm6, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm6\n"
+        "vpermilps $68, %%ymm7, %%ymm8\n"
+        "vpermilps $238, %%ymm7, %%ymm9\n"
+        "vxorps %%ymm10, %%ymm10, %%ymm10\n"
+        "vsubps %%ymm9, %%ymm10, %%ymm11\n"
+        "vblendps $204, %%ymm11, %%ymm9, %%ymm12\n"
+        "vaddps %%ymm8, %%ymm12, %%ymm7\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm0, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm0, %%ymm0, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm0, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm0\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm1, %%ymm1, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm1, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm1\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm2, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm2, %%ymm2, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm2\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm3, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm3, %%ymm3, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm3, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm3\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm4, %%ymm4, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm4, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm4\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm5, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm5, %%ymm5, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm5, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm5\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm6, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm6, %%ymm6, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm6, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm6\n"
+        "vxorps %%ymm8, %%ymm8, %%ymm8\n"
+        "vsubps %%ymm7, %%ymm8, %%ymm9\n"
+        "vperm2f128 $0, %%ymm7, %%ymm7, %%ymm10\n"
+        "vperm2f128 $49, %%ymm9, %%ymm7, %%ymm11\n"
+        "vaddps %%ymm10, %%ymm11, %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 8), "r"(buf + j + k + 16), "r"(buf + j + k + 24), "r"(buf + j + k + 32), "r"(buf + j + k + 40), "r"(buf + j + k + 48), "r"(buf + j + k + 56) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 512) {
-    for (int k = 0; k < 256; k += 8) {
+    for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 256) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 1024) {
-    for (int k = 0; k < 512; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 2048) {
-    for (int k = 0; k < 1024; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1024) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 64), "r"(buf + j + k + 128), "r"(buf + j + k + 192), "r"(buf + j + k + 256), "r"(buf + j + k + 320), "r"(buf + j + k + 384), "r"(buf + j + k + 448) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 4096) {
-    for (int k = 0; k < 2048; k += 8) {
+    for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2048) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 8192) {
-    for (int k = 0; k < 4096; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 16384) {
-    for (int k = 0; k < 8192; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8192) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 512), "r"(buf + j + k + 1024), "r"(buf + j + k + 1536), "r"(buf + j + k + 2048), "r"(buf + j + k + 2560), "r"(buf + j + k + 3072), "r"(buf + j + k + 3584) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 32768) {
-    for (int k = 0; k < 16384; k += 8) {
+    for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16384) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 65536) {
-    for (int k = 0; k < 32768; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 32768) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 131072) {
-    for (int k = 0; k < 65536; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 65536) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 4096), "r"(buf + j + k + 8192), "r"(buf + j + k + 12288), "r"(buf + j + k + 16384), "r"(buf + j + k + 20480), "r"(buf + j + k + 24576), "r"(buf + j + k + 28672) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 262144) {
-    for (int k = 0; k < 131072; k += 8) {
+    for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 131072) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 524288) {
-    for (int k = 0; k < 262144; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 262144) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 1048576) {
-    for (int k = 0; k < 524288; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 524288) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 32768), "r"(buf + j + k + 65536), "r"(buf + j + k + 98304), "r"(buf + j + k + 131072), "r"(buf + j + k + 163840), "r"(buf + j + k + 196608), "r"(buf + j + k + 229376) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 2097152) {
-    for (int k = 0; k < 1048576; k += 8) {
+    for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 1048576) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 4194304) {
-    for (int k = 0; k < 2097152; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 2097152) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 8388608) {
-    for (int k = 0; k < 4194304; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 4194304) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 262144), "r"(buf + j + k + 524288), "r"(buf + j + k + 786432), "r"(buf + j + k + 1048576), "r"(buf + j + k + 1310720), "r"(buf + j + k + 1572864), "r"(buf + j + k + 1835008) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 16777216) {
-    for (int k = 0; k < 8388608; k += 8) {
+    for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 8388608) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 33554432) {
-    for (int k = 0; k < 16777216; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 16777216) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 67108864) {
-    for (int k = 0; k < 33554432; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 33554432) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 2097152), "r"(buf + j + k + 4194304), "r"(buf + j + k + 6291456), "r"(buf + j + k + 8388608), "r"(buf + j + k + 10485760), "r"(buf + j + k + 12582912), "r"(buf + j + k + 14680064) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 134217728) {
-    for (int k = 0; k < 67108864; k += 8) {
+    for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 67108864) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 268435456) {
-    for (int k = 0; k < 134217728; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 134217728) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
-      );
-    }
-  }
-  for (int j = 0; j < 1073741824; j += 536870912) {
-    for (int k = 0; k < 268435456; k += 8) {
-      __asm__ volatile (
-        "vmovups (%0), %%ymm0\n"
-        "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 268435456) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 16777216), "r"(buf + j + k + 33554432), "r"(buf + j + k + 50331648), "r"(buf + j + k + 67108864), "r"(buf + j + k + 83886080), "r"(buf + j + k + 100663296), "r"(buf + j + k + 117440512) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
   for (int j = 0; j < 1073741824; j += 1073741824) {
-    for (int k = 0; k < 536870912; k += 8) {
+    for (int k = 0; k < 134217728; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
         "vmovups (%1), %%ymm1\n"
-        "vaddps %%ymm1, %%ymm0, %%ymm2\n"
-        "vsubps %%ymm1, %%ymm0, %%ymm3\n"
-        "vmovups %%ymm2, (%0)\n"
-        "vmovups %%ymm3, (%1)\n"
-        :: "r" (buf + j + k), "r" (buf + j + k + 536870912) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "memory"
+        "vmovups (%2), %%ymm2\n"
+        "vmovups (%3), %%ymm3\n"
+        "vmovups (%4), %%ymm4\n"
+        "vmovups (%5), %%ymm5\n"
+        "vmovups (%6), %%ymm6\n"
+        "vmovups (%7), %%ymm7\n"
+        "vaddps %%ymm1, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm1, %%ymm0, %%ymm9\n"
+        "vaddps %%ymm3, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm3, %%ymm2, %%ymm11\n"
+        "vaddps %%ymm5, %%ymm4, %%ymm12\n"
+        "vsubps %%ymm5, %%ymm4, %%ymm13\n"
+        "vaddps %%ymm7, %%ymm6, %%ymm14\n"
+        "vsubps %%ymm7, %%ymm6, %%ymm15\n"
+        "vaddps %%ymm10, %%ymm8, %%ymm0\n"
+        "vsubps %%ymm10, %%ymm8, %%ymm2\n"
+        "vaddps %%ymm11, %%ymm9, %%ymm1\n"
+        "vsubps %%ymm11, %%ymm9, %%ymm3\n"
+        "vaddps %%ymm14, %%ymm12, %%ymm4\n"
+        "vsubps %%ymm14, %%ymm12, %%ymm6\n"
+        "vaddps %%ymm15, %%ymm13, %%ymm5\n"
+        "vsubps %%ymm15, %%ymm13, %%ymm7\n"
+        "vaddps %%ymm4, %%ymm0, %%ymm8\n"
+        "vsubps %%ymm4, %%ymm0, %%ymm12\n"
+        "vaddps %%ymm5, %%ymm1, %%ymm9\n"
+        "vsubps %%ymm5, %%ymm1, %%ymm13\n"
+        "vaddps %%ymm6, %%ymm2, %%ymm10\n"
+        "vsubps %%ymm6, %%ymm2, %%ymm14\n"
+        "vaddps %%ymm7, %%ymm3, %%ymm11\n"
+        "vsubps %%ymm7, %%ymm3, %%ymm15\n"
+        "vmovups %%ymm8, (%0)\n"
+        "vmovups %%ymm9, (%1)\n"
+        "vmovups %%ymm10, (%2)\n"
+        "vmovups %%ymm11, (%3)\n"
+        "vmovups %%ymm12, (%4)\n"
+        "vmovups %%ymm13, (%5)\n"
+        "vmovups %%ymm14, (%6)\n"
+        "vmovups %%ymm15, (%7)\n"
+        :: "r"(buf + j + k + 0), "r"(buf + j + k + 134217728), "r"(buf + j + k + 268435456), "r"(buf + j + k + 402653184), "r"(buf + j + k + 536870912), "r"(buf + j + k + 671088640), "r"(buf + j + k + 805306368), "r"(buf + j + k + 939524096) : "%ymm0", "%ymm1", "%ymm2", "%ymm3", "%ymm4", "%ymm5", "%ymm6", "%ymm7", "%ymm8", "%ymm9", "%ymm10", "%ymm11", "%ymm12", "%ymm13", "%ymm14", "%ymm15", "memory"
       );
     }
   }
@@ -6072,88 +9264,88 @@ void fht(float *buf, int log_n) {
     steps_2_0_2(buf);
   }
   else if (log_n == 3) {
-    steps_3_0_3(buf);
+    steps_3(buf);
   }
   else if (log_n == 4) {
-    steps_4_0_4(buf);
+    steps_4(buf);
   }
   else if (log_n == 5) {
-    steps_5_0_5(buf);
+    steps_5(buf);
   }
   else if (log_n == 6) {
-    steps_6_0_6(buf);
+    steps_6(buf);
   }
   else if (log_n == 7) {
-    steps_7_0_7(buf);
+    steps_7(buf);
   }
   else if (log_n == 8) {
-    steps_8_0_8(buf);
+    steps_8(buf);
   }
   else if (log_n == 9) {
-    steps_9_0_9(buf);
+    steps_9(buf);
   }
   else if (log_n == 10) {
-    steps_10_0_10(buf);
+    steps_10(buf);
   }
   else if (log_n == 11) {
-    steps_11_0_11(buf);
+    steps_11(buf);
   }
   else if (log_n == 12) {
-    steps_12_0_12(buf);
+    steps_12(buf);
   }
   else if (log_n == 13) {
-    steps_13_0_13(buf);
+    steps_13(buf);
   }
   else if (log_n == 14) {
-    steps_14_0_14(buf);
+    steps_14(buf);
   }
   else if (log_n == 15) {
-    steps_15_0_15(buf);
+    steps_15(buf);
   }
   else if (log_n == 16) {
-    steps_16_0_16(buf);
+    steps_16(buf);
   }
   else if (log_n == 17) {
-    steps_17_0_17(buf);
+    steps_17(buf);
   }
   else if (log_n == 18) {
-    steps_18_0_18(buf);
+    steps_18(buf);
   }
   else if (log_n == 19) {
-    steps_19_0_19(buf);
+    steps_19(buf);
   }
   else if (log_n == 20) {
-    steps_20_0_20(buf);
+    steps_20(buf);
   }
   else if (log_n == 21) {
-    steps_21_0_21(buf);
+    steps_21(buf);
   }
   else if (log_n == 22) {
-    steps_22_0_22(buf);
+    steps_22(buf);
   }
   else if (log_n == 23) {
-    steps_23_0_23(buf);
+    steps_23(buf);
   }
   else if (log_n == 24) {
-    steps_24_0_24(buf);
+    steps_24(buf);
   }
   else if (log_n == 25) {
-    steps_25_0_25(buf);
+    steps_25(buf);
   }
   else if (log_n == 26) {
-    steps_26_0_26(buf);
+    steps_26(buf);
   }
   else if (log_n == 27) {
-    steps_27_0_27(buf);
+    steps_27(buf);
   }
   else if (log_n == 28) {
-    steps_28_0_28(buf);
+    steps_28(buf);
   }
   else if (log_n == 29) {
-    steps_29_0_29(buf);
+    steps_29(buf);
   }
   else if (log_n == 30) {
-    steps_30_0_30(buf);
+    steps_30(buf);
   }
   else {
   }
