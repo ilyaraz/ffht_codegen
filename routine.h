@@ -1,4 +1,4 @@
-inline void steps_1_0_1(float *buf) {
+inline void helper_1(float *buf) {
   for (int j = 0; j < 2; j += 2) {
     for (int k = 0; k < 1; ++k) {
       float u = buf[j + k];
@@ -9,7 +9,7 @@ inline void steps_1_0_1(float *buf) {
   }
 }
 
-inline void steps_2_0_2(float *buf) {
+inline void helper_2(float *buf) {
   for (int j = 0; j < 4; j += 2) {
     for (int k = 0; k < 1; ++k) {
       float u = buf[j + k];
@@ -28,7 +28,7 @@ inline void steps_2_0_2(float *buf) {
   }
 }
 
-inline void steps_3(float *buf) {
+inline void helper_3(float *buf) {
   for (int j = 0; j < 8; j += 8) {
     __asm__ volatile (
       "vmovups (%0), %%ymm0\n"
@@ -54,7 +54,7 @@ inline void steps_3(float *buf) {
   }
 }
 
-inline void steps_4(float *buf) {
+inline void helper_4(float *buf) {
   for (int j = 0; j < 16; j += 16) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -102,7 +102,7 @@ inline void steps_4(float *buf) {
   }
 }
 
-inline void steps_5(float *buf) {
+inline void helper_5(float *buf) {
   for (int j = 0; j < 32; j += 32) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -192,7 +192,7 @@ inline void steps_5(float *buf) {
   }
 }
 
-inline void steps_6(float *buf) {
+inline void helper_6(float *buf) {
   for (int j = 0; j < 64; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -370,7 +370,7 @@ inline void steps_6(float *buf) {
   }
 }
 
-inline void steps_7(float *buf) {
+inline void helper_7(float *buf) {
   for (int j = 0; j < 128; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -561,7 +561,7 @@ inline void steps_7(float *buf) {
   }
 }
 
-inline void steps_8(float *buf) {
+inline void helper_8(float *buf) {
   for (int j = 0; j < 256; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -762,7 +762,7 @@ inline void steps_8(float *buf) {
   }
 }
 
-inline void steps_9(float *buf) {
+inline void helper_9(float *buf) {
   for (int j = 0; j < 512; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -987,7 +987,7 @@ inline void steps_9(float *buf) {
   }
 }
 
-inline void steps_10(float *buf) {
+inline void helper_10(float *buf) {
   for (int j = 0; j < 1024; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -1225,7 +1225,7 @@ inline void steps_10(float *buf) {
   }
 }
 
-inline void steps_11(float *buf) {
+inline void helper_11(float *buf) {
   for (int j = 0; j < 2048; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -1473,7 +1473,7 @@ inline void steps_11(float *buf) {
   }
 }
 
-inline void steps_12(float *buf) {
+inline void helper_12(float *buf) {
   for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -1745,7 +1745,7 @@ inline void steps_12(float *buf) {
   }
 }
 
-inline void steps_13(float *buf) {
+inline void helper_13(float *buf) {
   for (int j = 0; j < 8192; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -2030,7 +2030,7 @@ inline void steps_13(float *buf) {
   }
 }
 
-inline void steps_14(float *buf) {
+inline void helper_14(float *buf) {
   for (int j = 0; j < 16384; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -2325,7 +2325,7 @@ inline void steps_14(float *buf) {
   }
 }
 
-inline void steps_15(float *buf) {
+inline void helper_15(float *buf) {
   for (int j = 0; j < 32768; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -2644,7 +2644,7 @@ inline void steps_15(float *buf) {
   }
 }
 
-inline void steps_16(float *buf) {
+inline void helper_16(float *buf) {
   for (int j = 0; j < 65536; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -2976,7 +2976,7 @@ inline void steps_16(float *buf) {
   }
 }
 
-inline void steps_17(float *buf) {
+inline void helper_17(float *buf) {
   for (int j = 0; j < 131072; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -3318,7 +3318,7 @@ inline void steps_17(float *buf) {
   }
 }
 
-inline void steps_18(float *buf) {
+inline void helper_18(float *buf) {
   for (int j = 0; j < 262144; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -3684,7 +3684,7 @@ inline void steps_18(float *buf) {
   }
 }
 
-inline void steps_19(float *buf) {
+inline void helper_19(float *buf) {
   for (int j = 0; j < 524288; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -4063,7 +4063,7 @@ inline void steps_19(float *buf) {
   }
 }
 
-inline void steps_20(float *buf) {
+inline void helper_20(float *buf) {
   for (int j = 0; j < 1048576; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -4452,7 +4452,7 @@ inline void steps_20(float *buf) {
   }
 }
 
-inline void steps_21(float *buf) {
+inline void helper_21(float *buf) {
   for (int j = 0; j < 2097152; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -4865,7 +4865,7 @@ inline void steps_21(float *buf) {
   }
 }
 
-inline void steps_22(float *buf) {
+inline void helper_22(float *buf) {
   for (int j = 0; j < 4194304; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -5291,7 +5291,7 @@ inline void steps_22(float *buf) {
   }
 }
 
-inline void steps_23(float *buf) {
+inline void helper_23(float *buf) {
   for (int j = 0; j < 8388608; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -5727,7 +5727,7 @@ inline void steps_23(float *buf) {
   }
 }
 
-inline void steps_24(float *buf) {
+inline void helper_24(float *buf) {
   for (int j = 0; j < 16777216; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -6187,7 +6187,7 @@ inline void steps_24(float *buf) {
   }
 }
 
-inline void steps_25(float *buf) {
+inline void helper_25(float *buf) {
   for (int j = 0; j < 33554432; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -6660,7 +6660,7 @@ inline void steps_25(float *buf) {
   }
 }
 
-inline void steps_26(float *buf) {
+inline void helper_26(float *buf) {
   for (int j = 0; j < 67108864; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -7143,7 +7143,7 @@ inline void steps_26(float *buf) {
   }
 }
 
-inline void steps_27(float *buf) {
+inline void helper_27(float *buf) {
   for (int j = 0; j < 134217728; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -7650,7 +7650,7 @@ inline void steps_27(float *buf) {
   }
 }
 
-inline void steps_28(float *buf) {
+inline void helper_28(float *buf) {
   for (int j = 0; j < 268435456; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -8170,7 +8170,7 @@ inline void steps_28(float *buf) {
   }
 }
 
-inline void steps_29(float *buf) {
+inline void helper_29(float *buf) {
   for (int j = 0; j < 536870912; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -8700,7 +8700,7 @@ inline void steps_29(float *buf) {
   }
 }
 
-inline void steps_30(float *buf) {
+inline void helper_30(float *buf) {
   for (int j = 0; j < 1073741824; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
@@ -9258,94 +9258,94 @@ void fht(float *buf, int log_n) {
   if (log_n == 0) {
   }
   else if (log_n == 1) {
-    steps_1_0_1(buf);
+    helper_1(buf);
   }
   else if (log_n == 2) {
-    steps_2_0_2(buf);
+    helper_2(buf);
   }
   else if (log_n == 3) {
-    steps_3(buf);
+    helper_3(buf);
   }
   else if (log_n == 4) {
-    steps_4(buf);
+    helper_4(buf);
   }
   else if (log_n == 5) {
-    steps_5(buf);
+    helper_5(buf);
   }
   else if (log_n == 6) {
-    steps_6(buf);
+    helper_6(buf);
   }
   else if (log_n == 7) {
-    steps_7(buf);
+    helper_7(buf);
   }
   else if (log_n == 8) {
-    steps_8(buf);
+    helper_8(buf);
   }
   else if (log_n == 9) {
-    steps_9(buf);
+    helper_9(buf);
   }
   else if (log_n == 10) {
-    steps_10(buf);
+    helper_10(buf);
   }
   else if (log_n == 11) {
-    steps_11(buf);
+    helper_11(buf);
   }
   else if (log_n == 12) {
-    steps_12(buf);
+    helper_12(buf);
   }
   else if (log_n == 13) {
-    steps_13(buf);
+    helper_13(buf);
   }
   else if (log_n == 14) {
-    steps_14(buf);
+    helper_14(buf);
   }
   else if (log_n == 15) {
-    steps_15(buf);
+    helper_15(buf);
   }
   else if (log_n == 16) {
-    steps_16(buf);
+    helper_16(buf);
   }
   else if (log_n == 17) {
-    steps_17(buf);
+    helper_17(buf);
   }
   else if (log_n == 18) {
-    steps_18(buf);
+    helper_18(buf);
   }
   else if (log_n == 19) {
-    steps_19(buf);
+    helper_19(buf);
   }
   else if (log_n == 20) {
-    steps_20(buf);
+    helper_20(buf);
   }
   else if (log_n == 21) {
-    steps_21(buf);
+    helper_21(buf);
   }
   else if (log_n == 22) {
-    steps_22(buf);
+    helper_22(buf);
   }
   else if (log_n == 23) {
-    steps_23(buf);
+    helper_23(buf);
   }
   else if (log_n == 24) {
-    steps_24(buf);
+    helper_24(buf);
   }
   else if (log_n == 25) {
-    steps_25(buf);
+    helper_25(buf);
   }
   else if (log_n == 26) {
-    steps_26(buf);
+    helper_26(buf);
   }
   else if (log_n == 27) {
-    steps_27(buf);
+    helper_27(buf);
   }
   else if (log_n == 28) {
-    steps_28(buf);
+    helper_28(buf);
   }
   else if (log_n == 29) {
-    steps_29(buf);
+    helper_29(buf);
   }
   else if (log_n == 30) {
-    steps_30(buf);
+    helper_30(buf);
   }
   else {
   }
