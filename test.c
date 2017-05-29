@@ -25,41 +25,45 @@ void dumb_fht(float *buf, int log_n) {
 
 int main(void) {
     srand(4057218);
-    int log_n;
-    scanf("%d", &log_n);
-    int n = 1 << log_n;
-    void *buf = malloc(sizeof(float) * n + 32);
-    void *start = buf;
-    while ((size_t)start % 32) ++start;
-    float *a = (float*)start;
-    float *aux = (float*)malloc(sizeof(float) * n);
-    for (int i = 0; i < n; ++i) {
-        a[i] = 1.0 - 2.0 * (rand() % 2);
-        aux[i] = a[i];
-    }
-    fht(a, log_n);
-    dumb_fht(aux, log_n);
-    double max_error = 0.0;
-    for (int i = 0; i < n; ++i) {
-        double error = fabs(a[i] - aux[i]);
-        if (error > max_error) {
-            max_error = error;
+    for (int log_n = 1; log_n <= 27; ++log_n) {
+        printf("%d ", log_n);
+        int n = 1 << log_n;
+        void *buf = malloc(sizeof(float) * n + 32);
+        void *start = buf;
+        while ((size_t)start % 32 != 0) ++start;
+        float *a = (float*)start;
+        float *aux = (float*)malloc(sizeof(float) * n);
+        for (int i = 0; i < n; ++i) {
+            a[i] = 1.0 - 2.0 * (rand() % 2);
+            aux[i] = a[i];
         }
-    }
-    printf("error: %.10e\n", max_error);
-    for (int num_it = 10;; num_it *= 2) {
-        clock_t tt1 = clock();
-        for (int it = 0; it < num_it; ++it) {
-            fht(a, log_n);
+        fht(a, log_n);
+        dumb_fht(aux, log_n);
+        double max_error = 0.0;
+        for (int i = 0; i < n; ++i) {
+            double error = fabs(a[i] - aux[i]);
+            if (error > max_error) {
+                max_error = error;
+            }
         }
-        clock_t tt2 = clock();
-        double sec = (tt2 - tt1) / (CLOCKS_PER_SEC + 0.0);
-        if (sec >= 1.0) {
-            printf("%.10e\n", sec / (num_it + 0.0));
-            break;
+        if (max_error > 1e-5) {
+            printf("ERROR: %.10lf\n", max_error);
+            return 1;
         }
+        for (int num_it = 10;; num_it *= 2) {
+            clock_t tt1 = clock();
+            for (int it = 0; it < num_it; ++it) {
+                fht(a, log_n);
+            }
+            clock_t tt2 = clock();
+            double sec = (tt2 - tt1) / (CLOCKS_PER_SEC + 0.0);
+            if (sec >= 1.0) {
+                printf("%.10e\n", sec / (num_it + 0.0));
+                break;
+            }
+        }
+        free(buf);
+        free(aux);
     }
-    free(buf);
-    free(aux);
     return 0;
 }
