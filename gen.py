@@ -141,6 +141,34 @@ def float_avx_greedy_merged(log_n):
     res += "}\n"
     return res
 
+def float_avx_greedy_merged_recursive(log_n):
+    res  = "void helper_%d(float *buf, int k) {\n" % log_n
+    res += "  if (k == 12) {\n"
+    res += float_avx_composite_step(12, 0, 6)
+    res += float_avx_composite_step(12, 6, 9)
+    res += float_avx_composite_step(12, 9, 12)
+    res += "    return;\n"
+    res += "  }\n"
+    cur = 15
+    while cur <= log_n:
+        res += "  if (k == %d) {\n" % cur
+        for i in range(8):
+            res += "    helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (cur - 3)), (cur - 3))
+        res += float_avx_composite_step(cur, cur - 3, cur);
+        res += "    return;\n"
+        res += "  }\n"
+        cur += 3
+    if log_n % 3 != 0:
+        res += "  if (k == %d) {\n" % log_n
+        for i in range(1 << (log_n % 3)):
+            res += "    helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (log_n - log_n % 3)), (log_n - log_n % 3))
+        res += float_avx_composite_step(log_n, log_n - log_n % 3, log_n);
+        res += "    return;\n"
+        res += "  }\n"
+        cur += 3
+    res += "}\n"
+    return res
+
 def float_plain_unmerged(log_n):
     n = 1 << log_n
     res  = "inline void helper_%d(float *buf) {\n" % log_n
@@ -152,16 +180,23 @@ def float_plain_unmerged(log_n):
 for i in range(1, 31):
     if i < 3:
         print float_plain_unmerged(i)
-    else:
+    elif i <= 12:
         print float_avx_greedy_merged(i)
+    else:
+        print float_avx_greedy_merged_recursive(i)
 
 dispatch  = "void fht(float *buf, int log_n) {\n"
 dispatch += "  if (log_n == 0) {\n"
 dispatch += "  }\n"
 for i in range(1, 31):
-    dispatch += "  else if (log_n == %d) {\n" % i
-    dispatch += '    helper_%d(buf);\n' % i
-    dispatch += "  }\n"
+    if i <= 12:
+        dispatch += "  else if (log_n == %d) {\n" % i
+        dispatch += '    helper_%d(buf);\n' % i
+        dispatch += "  }\n"
+    else:
+        dispatch += "  else if (log_n == %d) {\n" % i
+        dispatch += '    helper_%d(buf, %d);\n' % (i, i)
+        dispatch += "  }\n"
 dispatch += "  else {\n"
 dispatch += "  }\n"
 dispatch += "}\n"

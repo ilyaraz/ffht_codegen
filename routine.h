@@ -1745,8 +1745,9 @@ inline void helper_12(float *buf) {
   }
 }
 
-inline void helper_13(float *buf) {
-  for (int j = 0; j < 8192; j += 64) {
+void helper_13(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -1921,7 +1922,7 @@ inline void helper_13(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 8192; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -1968,7 +1969,7 @@ inline void helper_13(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 8192; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2015,6 +2016,11 @@ inline void helper_13(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 13) {
+    helper_13(buf + 0, 12);
+    helper_13(buf + 4096, 12);
   for (int j = 0; j < 8192; j += 8192) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
@@ -2028,10 +2034,13 @@ inline void helper_13(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_14(float *buf) {
-  for (int j = 0; j < 16384; j += 64) {
+void helper_14(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2206,7 +2215,7 @@ inline void helper_14(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 16384; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2253,7 +2262,7 @@ inline void helper_14(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 16384; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2300,6 +2309,13 @@ inline void helper_14(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 14) {
+    helper_14(buf + 0, 12);
+    helper_14(buf + 4096, 12);
+    helper_14(buf + 8192, 12);
+    helper_14(buf + 12288, 12);
   for (int j = 0; j < 16384; j += 16384) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
@@ -2323,10 +2339,13 @@ inline void helper_14(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_15(float *buf) {
-  for (int j = 0; j < 32768; j += 64) {
+void helper_15(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2501,7 +2520,7 @@ inline void helper_15(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 32768; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2548,7 +2567,7 @@ inline void helper_15(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 32768; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2595,6 +2614,17 @@ inline void helper_15(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 15) {
+    helper_15(buf + 0, 12);
+    helper_15(buf + 4096, 12);
+    helper_15(buf + 8192, 12);
+    helper_15(buf + 12288, 12);
+    helper_15(buf + 16384, 12);
+    helper_15(buf + 20480, 12);
+    helper_15(buf + 24576, 12);
+    helper_15(buf + 28672, 12);
   for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
@@ -2642,10 +2672,13 @@ inline void helper_15(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_16(float *buf) {
-  for (int j = 0; j < 65536; j += 64) {
+void helper_16(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2820,7 +2853,7 @@ inline void helper_16(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 65536; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2867,7 +2900,7 @@ inline void helper_16(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 65536; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2914,7 +2947,18 @@ inline void helper_16(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 65536; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_16(buf + 0, 12);
+    helper_16(buf + 4096, 12);
+    helper_16(buf + 8192, 12);
+    helper_16(buf + 12288, 12);
+    helper_16(buf + 16384, 12);
+    helper_16(buf + 20480, 12);
+    helper_16(buf + 24576, 12);
+    helper_16(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -2961,6 +3005,11 @@ inline void helper_16(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 16) {
+    helper_16(buf + 0, 15);
+    helper_16(buf + 32768, 15);
   for (int j = 0; j < 65536; j += 65536) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
@@ -2974,10 +3023,13 @@ inline void helper_16(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_17(float *buf) {
-  for (int j = 0; j < 131072; j += 64) {
+void helper_17(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3152,7 +3204,7 @@ inline void helper_17(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 131072; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3199,7 +3251,7 @@ inline void helper_17(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 131072; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3246,7 +3298,18 @@ inline void helper_17(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 131072; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_17(buf + 0, 12);
+    helper_17(buf + 4096, 12);
+    helper_17(buf + 8192, 12);
+    helper_17(buf + 12288, 12);
+    helper_17(buf + 16384, 12);
+    helper_17(buf + 20480, 12);
+    helper_17(buf + 24576, 12);
+    helper_17(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3293,6 +3356,13 @@ inline void helper_17(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 17) {
+    helper_17(buf + 0, 15);
+    helper_17(buf + 32768, 15);
+    helper_17(buf + 65536, 15);
+    helper_17(buf + 98304, 15);
   for (int j = 0; j < 131072; j += 131072) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
@@ -3316,10 +3386,13 @@ inline void helper_17(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_18(float *buf) {
-  for (int j = 0; j < 262144; j += 64) {
+void helper_18(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3494,7 +3567,7 @@ inline void helper_18(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 262144; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3541,7 +3614,7 @@ inline void helper_18(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 262144; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3588,7 +3661,18 @@ inline void helper_18(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 262144; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_18(buf + 0, 12);
+    helper_18(buf + 4096, 12);
+    helper_18(buf + 8192, 12);
+    helper_18(buf + 12288, 12);
+    helper_18(buf + 16384, 12);
+    helper_18(buf + 20480, 12);
+    helper_18(buf + 24576, 12);
+    helper_18(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3635,6 +3719,17 @@ inline void helper_18(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 18) {
+    helper_18(buf + 0, 15);
+    helper_18(buf + 32768, 15);
+    helper_18(buf + 65536, 15);
+    helper_18(buf + 98304, 15);
+    helper_18(buf + 131072, 15);
+    helper_18(buf + 163840, 15);
+    helper_18(buf + 196608, 15);
+    helper_18(buf + 229376, 15);
   for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
@@ -3682,10 +3777,13 @@ inline void helper_18(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_19(float *buf) {
-  for (int j = 0; j < 524288; j += 64) {
+void helper_19(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3860,7 +3958,7 @@ inline void helper_19(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 524288; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3907,7 +4005,7 @@ inline void helper_19(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 524288; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -3954,7 +4052,18 @@ inline void helper_19(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 524288; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_19(buf + 0, 12);
+    helper_19(buf + 4096, 12);
+    helper_19(buf + 8192, 12);
+    helper_19(buf + 12288, 12);
+    helper_19(buf + 16384, 12);
+    helper_19(buf + 20480, 12);
+    helper_19(buf + 24576, 12);
+    helper_19(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4001,7 +4110,18 @@ inline void helper_19(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 524288; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_19(buf + 0, 15);
+    helper_19(buf + 32768, 15);
+    helper_19(buf + 65536, 15);
+    helper_19(buf + 98304, 15);
+    helper_19(buf + 131072, 15);
+    helper_19(buf + 163840, 15);
+    helper_19(buf + 196608, 15);
+    helper_19(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4048,6 +4168,11 @@ inline void helper_19(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 19) {
+    helper_19(buf + 0, 18);
+    helper_19(buf + 262144, 18);
   for (int j = 0; j < 524288; j += 524288) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
@@ -4061,10 +4186,13 @@ inline void helper_19(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_20(float *buf) {
-  for (int j = 0; j < 1048576; j += 64) {
+void helper_20(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4239,7 +4367,7 @@ inline void helper_20(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1048576; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4286,7 +4414,7 @@ inline void helper_20(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1048576; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4333,7 +4461,18 @@ inline void helper_20(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1048576; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_20(buf + 0, 12);
+    helper_20(buf + 4096, 12);
+    helper_20(buf + 8192, 12);
+    helper_20(buf + 12288, 12);
+    helper_20(buf + 16384, 12);
+    helper_20(buf + 20480, 12);
+    helper_20(buf + 24576, 12);
+    helper_20(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4380,7 +4519,18 @@ inline void helper_20(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1048576; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_20(buf + 0, 15);
+    helper_20(buf + 32768, 15);
+    helper_20(buf + 65536, 15);
+    helper_20(buf + 98304, 15);
+    helper_20(buf + 131072, 15);
+    helper_20(buf + 163840, 15);
+    helper_20(buf + 196608, 15);
+    helper_20(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4427,6 +4577,13 @@ inline void helper_20(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 20) {
+    helper_20(buf + 0, 18);
+    helper_20(buf + 262144, 18);
+    helper_20(buf + 524288, 18);
+    helper_20(buf + 786432, 18);
   for (int j = 0; j < 1048576; j += 1048576) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
@@ -4450,10 +4607,13 @@ inline void helper_20(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_21(float *buf) {
-  for (int j = 0; j < 2097152; j += 64) {
+void helper_21(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4628,7 +4788,7 @@ inline void helper_21(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 2097152; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4675,7 +4835,7 @@ inline void helper_21(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 2097152; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4722,7 +4882,18 @@ inline void helper_21(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 2097152; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_21(buf + 0, 12);
+    helper_21(buf + 4096, 12);
+    helper_21(buf + 8192, 12);
+    helper_21(buf + 12288, 12);
+    helper_21(buf + 16384, 12);
+    helper_21(buf + 20480, 12);
+    helper_21(buf + 24576, 12);
+    helper_21(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4769,7 +4940,18 @@ inline void helper_21(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 2097152; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_21(buf + 0, 15);
+    helper_21(buf + 32768, 15);
+    helper_21(buf + 65536, 15);
+    helper_21(buf + 98304, 15);
+    helper_21(buf + 131072, 15);
+    helper_21(buf + 163840, 15);
+    helper_21(buf + 196608, 15);
+    helper_21(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -4816,6 +4998,17 @@ inline void helper_21(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 21) {
+    helper_21(buf + 0, 18);
+    helper_21(buf + 262144, 18);
+    helper_21(buf + 524288, 18);
+    helper_21(buf + 786432, 18);
+    helper_21(buf + 1048576, 18);
+    helper_21(buf + 1310720, 18);
+    helper_21(buf + 1572864, 18);
+    helper_21(buf + 1835008, 18);
   for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
@@ -4863,10 +5056,13 @@ inline void helper_21(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_22(float *buf) {
-  for (int j = 0; j < 4194304; j += 64) {
+void helper_22(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5041,7 +5237,7 @@ inline void helper_22(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 4194304; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5088,7 +5284,7 @@ inline void helper_22(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 4194304; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5135,7 +5331,18 @@ inline void helper_22(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 4194304; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_22(buf + 0, 12);
+    helper_22(buf + 4096, 12);
+    helper_22(buf + 8192, 12);
+    helper_22(buf + 12288, 12);
+    helper_22(buf + 16384, 12);
+    helper_22(buf + 20480, 12);
+    helper_22(buf + 24576, 12);
+    helper_22(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5182,7 +5389,18 @@ inline void helper_22(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 4194304; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_22(buf + 0, 15);
+    helper_22(buf + 32768, 15);
+    helper_22(buf + 65536, 15);
+    helper_22(buf + 98304, 15);
+    helper_22(buf + 131072, 15);
+    helper_22(buf + 163840, 15);
+    helper_22(buf + 196608, 15);
+    helper_22(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5229,7 +5447,18 @@ inline void helper_22(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 4194304; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_22(buf + 0, 18);
+    helper_22(buf + 262144, 18);
+    helper_22(buf + 524288, 18);
+    helper_22(buf + 786432, 18);
+    helper_22(buf + 1048576, 18);
+    helper_22(buf + 1310720, 18);
+    helper_22(buf + 1572864, 18);
+    helper_22(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5276,6 +5505,11 @@ inline void helper_22(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 22) {
+    helper_22(buf + 0, 21);
+    helper_22(buf + 2097152, 21);
   for (int j = 0; j < 4194304; j += 4194304) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
@@ -5289,10 +5523,13 @@ inline void helper_22(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_23(float *buf) {
-  for (int j = 0; j < 8388608; j += 64) {
+void helper_23(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5467,7 +5704,7 @@ inline void helper_23(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 8388608; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5514,7 +5751,7 @@ inline void helper_23(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 8388608; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5561,7 +5798,18 @@ inline void helper_23(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 8388608; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_23(buf + 0, 12);
+    helper_23(buf + 4096, 12);
+    helper_23(buf + 8192, 12);
+    helper_23(buf + 12288, 12);
+    helper_23(buf + 16384, 12);
+    helper_23(buf + 20480, 12);
+    helper_23(buf + 24576, 12);
+    helper_23(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5608,7 +5856,18 @@ inline void helper_23(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 8388608; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_23(buf + 0, 15);
+    helper_23(buf + 32768, 15);
+    helper_23(buf + 65536, 15);
+    helper_23(buf + 98304, 15);
+    helper_23(buf + 131072, 15);
+    helper_23(buf + 163840, 15);
+    helper_23(buf + 196608, 15);
+    helper_23(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5655,7 +5914,18 @@ inline void helper_23(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 8388608; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_23(buf + 0, 18);
+    helper_23(buf + 262144, 18);
+    helper_23(buf + 524288, 18);
+    helper_23(buf + 786432, 18);
+    helper_23(buf + 1048576, 18);
+    helper_23(buf + 1310720, 18);
+    helper_23(buf + 1572864, 18);
+    helper_23(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5702,6 +5972,13 @@ inline void helper_23(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 23) {
+    helper_23(buf + 0, 21);
+    helper_23(buf + 2097152, 21);
+    helper_23(buf + 4194304, 21);
+    helper_23(buf + 6291456, 21);
   for (int j = 0; j < 8388608; j += 8388608) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
@@ -5725,10 +6002,13 @@ inline void helper_23(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_24(float *buf) {
-  for (int j = 0; j < 16777216; j += 64) {
+void helper_24(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5903,7 +6183,7 @@ inline void helper_24(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 16777216; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5950,7 +6230,7 @@ inline void helper_24(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 16777216; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -5997,7 +6277,18 @@ inline void helper_24(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 16777216; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_24(buf + 0, 12);
+    helper_24(buf + 4096, 12);
+    helper_24(buf + 8192, 12);
+    helper_24(buf + 12288, 12);
+    helper_24(buf + 16384, 12);
+    helper_24(buf + 20480, 12);
+    helper_24(buf + 24576, 12);
+    helper_24(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6044,7 +6335,18 @@ inline void helper_24(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 16777216; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_24(buf + 0, 15);
+    helper_24(buf + 32768, 15);
+    helper_24(buf + 65536, 15);
+    helper_24(buf + 98304, 15);
+    helper_24(buf + 131072, 15);
+    helper_24(buf + 163840, 15);
+    helper_24(buf + 196608, 15);
+    helper_24(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6091,7 +6393,18 @@ inline void helper_24(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 16777216; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_24(buf + 0, 18);
+    helper_24(buf + 262144, 18);
+    helper_24(buf + 524288, 18);
+    helper_24(buf + 786432, 18);
+    helper_24(buf + 1048576, 18);
+    helper_24(buf + 1310720, 18);
+    helper_24(buf + 1572864, 18);
+    helper_24(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6138,6 +6451,17 @@ inline void helper_24(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 24) {
+    helper_24(buf + 0, 21);
+    helper_24(buf + 2097152, 21);
+    helper_24(buf + 4194304, 21);
+    helper_24(buf + 6291456, 21);
+    helper_24(buf + 8388608, 21);
+    helper_24(buf + 10485760, 21);
+    helper_24(buf + 12582912, 21);
+    helper_24(buf + 14680064, 21);
   for (int j = 0; j < 16777216; j += 16777216) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
@@ -6185,10 +6509,13 @@ inline void helper_24(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_25(float *buf) {
-  for (int j = 0; j < 33554432; j += 64) {
+void helper_25(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6363,7 +6690,7 @@ inline void helper_25(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 33554432; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6410,7 +6737,7 @@ inline void helper_25(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 33554432; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6457,7 +6784,18 @@ inline void helper_25(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 33554432; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_25(buf + 0, 12);
+    helper_25(buf + 4096, 12);
+    helper_25(buf + 8192, 12);
+    helper_25(buf + 12288, 12);
+    helper_25(buf + 16384, 12);
+    helper_25(buf + 20480, 12);
+    helper_25(buf + 24576, 12);
+    helper_25(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6504,7 +6842,18 @@ inline void helper_25(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 33554432; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_25(buf + 0, 15);
+    helper_25(buf + 32768, 15);
+    helper_25(buf + 65536, 15);
+    helper_25(buf + 98304, 15);
+    helper_25(buf + 131072, 15);
+    helper_25(buf + 163840, 15);
+    helper_25(buf + 196608, 15);
+    helper_25(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6551,7 +6900,18 @@ inline void helper_25(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 33554432; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_25(buf + 0, 18);
+    helper_25(buf + 262144, 18);
+    helper_25(buf + 524288, 18);
+    helper_25(buf + 786432, 18);
+    helper_25(buf + 1048576, 18);
+    helper_25(buf + 1310720, 18);
+    helper_25(buf + 1572864, 18);
+    helper_25(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6598,7 +6958,18 @@ inline void helper_25(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 33554432; j += 16777216) {
+    return;
+  }
+  if (k == 24) {
+    helper_25(buf + 0, 21);
+    helper_25(buf + 2097152, 21);
+    helper_25(buf + 4194304, 21);
+    helper_25(buf + 6291456, 21);
+    helper_25(buf + 8388608, 21);
+    helper_25(buf + 10485760, 21);
+    helper_25(buf + 12582912, 21);
+    helper_25(buf + 14680064, 21);
+  for (int j = 0; j < 16777216; j += 16777216) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6645,6 +7016,11 @@ inline void helper_25(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 25) {
+    helper_25(buf + 0, 24);
+    helper_25(buf + 16777216, 24);
   for (int j = 0; j < 33554432; j += 33554432) {
     for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
@@ -6658,10 +7034,13 @@ inline void helper_25(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_26(float *buf) {
-  for (int j = 0; j < 67108864; j += 64) {
+void helper_26(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6836,7 +7215,7 @@ inline void helper_26(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 67108864; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6883,7 +7262,7 @@ inline void helper_26(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 67108864; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6930,7 +7309,18 @@ inline void helper_26(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 67108864; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_26(buf + 0, 12);
+    helper_26(buf + 4096, 12);
+    helper_26(buf + 8192, 12);
+    helper_26(buf + 12288, 12);
+    helper_26(buf + 16384, 12);
+    helper_26(buf + 20480, 12);
+    helper_26(buf + 24576, 12);
+    helper_26(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -6977,7 +7367,18 @@ inline void helper_26(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 67108864; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_26(buf + 0, 15);
+    helper_26(buf + 32768, 15);
+    helper_26(buf + 65536, 15);
+    helper_26(buf + 98304, 15);
+    helper_26(buf + 131072, 15);
+    helper_26(buf + 163840, 15);
+    helper_26(buf + 196608, 15);
+    helper_26(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7024,7 +7425,18 @@ inline void helper_26(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 67108864; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_26(buf + 0, 18);
+    helper_26(buf + 262144, 18);
+    helper_26(buf + 524288, 18);
+    helper_26(buf + 786432, 18);
+    helper_26(buf + 1048576, 18);
+    helper_26(buf + 1310720, 18);
+    helper_26(buf + 1572864, 18);
+    helper_26(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7071,7 +7483,18 @@ inline void helper_26(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 67108864; j += 16777216) {
+    return;
+  }
+  if (k == 24) {
+    helper_26(buf + 0, 21);
+    helper_26(buf + 2097152, 21);
+    helper_26(buf + 4194304, 21);
+    helper_26(buf + 6291456, 21);
+    helper_26(buf + 8388608, 21);
+    helper_26(buf + 10485760, 21);
+    helper_26(buf + 12582912, 21);
+    helper_26(buf + 14680064, 21);
+  for (int j = 0; j < 16777216; j += 16777216) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7118,6 +7541,13 @@ inline void helper_26(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 26) {
+    helper_26(buf + 0, 24);
+    helper_26(buf + 16777216, 24);
+    helper_26(buf + 33554432, 24);
+    helper_26(buf + 50331648, 24);
   for (int j = 0; j < 67108864; j += 67108864) {
     for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
@@ -7141,10 +7571,13 @@ inline void helper_26(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_27(float *buf) {
-  for (int j = 0; j < 134217728; j += 64) {
+void helper_27(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7319,7 +7752,7 @@ inline void helper_27(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 134217728; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7366,7 +7799,7 @@ inline void helper_27(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 134217728; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7413,7 +7846,18 @@ inline void helper_27(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 134217728; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_27(buf + 0, 12);
+    helper_27(buf + 4096, 12);
+    helper_27(buf + 8192, 12);
+    helper_27(buf + 12288, 12);
+    helper_27(buf + 16384, 12);
+    helper_27(buf + 20480, 12);
+    helper_27(buf + 24576, 12);
+    helper_27(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7460,7 +7904,18 @@ inline void helper_27(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 134217728; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_27(buf + 0, 15);
+    helper_27(buf + 32768, 15);
+    helper_27(buf + 65536, 15);
+    helper_27(buf + 98304, 15);
+    helper_27(buf + 131072, 15);
+    helper_27(buf + 163840, 15);
+    helper_27(buf + 196608, 15);
+    helper_27(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7507,7 +7962,18 @@ inline void helper_27(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 134217728; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_27(buf + 0, 18);
+    helper_27(buf + 262144, 18);
+    helper_27(buf + 524288, 18);
+    helper_27(buf + 786432, 18);
+    helper_27(buf + 1048576, 18);
+    helper_27(buf + 1310720, 18);
+    helper_27(buf + 1572864, 18);
+    helper_27(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7554,7 +8020,18 @@ inline void helper_27(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 134217728; j += 16777216) {
+    return;
+  }
+  if (k == 24) {
+    helper_27(buf + 0, 21);
+    helper_27(buf + 2097152, 21);
+    helper_27(buf + 4194304, 21);
+    helper_27(buf + 6291456, 21);
+    helper_27(buf + 8388608, 21);
+    helper_27(buf + 10485760, 21);
+    helper_27(buf + 12582912, 21);
+    helper_27(buf + 14680064, 21);
+  for (int j = 0; j < 16777216; j += 16777216) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7601,6 +8078,17 @@ inline void helper_27(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 27) {
+    helper_27(buf + 0, 24);
+    helper_27(buf + 16777216, 24);
+    helper_27(buf + 33554432, 24);
+    helper_27(buf + 50331648, 24);
+    helper_27(buf + 67108864, 24);
+    helper_27(buf + 83886080, 24);
+    helper_27(buf + 100663296, 24);
+    helper_27(buf + 117440512, 24);
   for (int j = 0; j < 134217728; j += 134217728) {
     for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
@@ -7648,10 +8136,13 @@ inline void helper_27(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_28(float *buf) {
-  for (int j = 0; j < 268435456; j += 64) {
+void helper_28(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7826,7 +8317,7 @@ inline void helper_28(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 268435456; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7873,7 +8364,7 @@ inline void helper_28(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 268435456; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7920,7 +8411,18 @@ inline void helper_28(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 268435456; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_28(buf + 0, 12);
+    helper_28(buf + 4096, 12);
+    helper_28(buf + 8192, 12);
+    helper_28(buf + 12288, 12);
+    helper_28(buf + 16384, 12);
+    helper_28(buf + 20480, 12);
+    helper_28(buf + 24576, 12);
+    helper_28(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -7967,7 +8469,18 @@ inline void helper_28(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 268435456; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_28(buf + 0, 15);
+    helper_28(buf + 32768, 15);
+    helper_28(buf + 65536, 15);
+    helper_28(buf + 98304, 15);
+    helper_28(buf + 131072, 15);
+    helper_28(buf + 163840, 15);
+    helper_28(buf + 196608, 15);
+    helper_28(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8014,7 +8527,18 @@ inline void helper_28(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 268435456; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_28(buf + 0, 18);
+    helper_28(buf + 262144, 18);
+    helper_28(buf + 524288, 18);
+    helper_28(buf + 786432, 18);
+    helper_28(buf + 1048576, 18);
+    helper_28(buf + 1310720, 18);
+    helper_28(buf + 1572864, 18);
+    helper_28(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8061,7 +8585,18 @@ inline void helper_28(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 268435456; j += 16777216) {
+    return;
+  }
+  if (k == 24) {
+    helper_28(buf + 0, 21);
+    helper_28(buf + 2097152, 21);
+    helper_28(buf + 4194304, 21);
+    helper_28(buf + 6291456, 21);
+    helper_28(buf + 8388608, 21);
+    helper_28(buf + 10485760, 21);
+    helper_28(buf + 12582912, 21);
+    helper_28(buf + 14680064, 21);
+  for (int j = 0; j < 16777216; j += 16777216) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8108,7 +8643,18 @@ inline void helper_28(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 268435456; j += 134217728) {
+    return;
+  }
+  if (k == 27) {
+    helper_28(buf + 0, 24);
+    helper_28(buf + 16777216, 24);
+    helper_28(buf + 33554432, 24);
+    helper_28(buf + 50331648, 24);
+    helper_28(buf + 67108864, 24);
+    helper_28(buf + 83886080, 24);
+    helper_28(buf + 100663296, 24);
+    helper_28(buf + 117440512, 24);
+  for (int j = 0; j < 134217728; j += 134217728) {
     for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8155,6 +8701,11 @@ inline void helper_28(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 28) {
+    helper_28(buf + 0, 27);
+    helper_28(buf + 134217728, 27);
   for (int j = 0; j < 268435456; j += 268435456) {
     for (int k = 0; k < 134217728; k += 8) {
       __asm__ volatile (
@@ -8168,10 +8719,13 @@ inline void helper_28(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_29(float *buf) {
-  for (int j = 0; j < 536870912; j += 64) {
+void helper_29(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8346,7 +8900,7 @@ inline void helper_29(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 536870912; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8393,7 +8947,7 @@ inline void helper_29(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 536870912; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8440,7 +8994,18 @@ inline void helper_29(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 536870912; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_29(buf + 0, 12);
+    helper_29(buf + 4096, 12);
+    helper_29(buf + 8192, 12);
+    helper_29(buf + 12288, 12);
+    helper_29(buf + 16384, 12);
+    helper_29(buf + 20480, 12);
+    helper_29(buf + 24576, 12);
+    helper_29(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8487,7 +9052,18 @@ inline void helper_29(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 536870912; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_29(buf + 0, 15);
+    helper_29(buf + 32768, 15);
+    helper_29(buf + 65536, 15);
+    helper_29(buf + 98304, 15);
+    helper_29(buf + 131072, 15);
+    helper_29(buf + 163840, 15);
+    helper_29(buf + 196608, 15);
+    helper_29(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8534,7 +9110,18 @@ inline void helper_29(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 536870912; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_29(buf + 0, 18);
+    helper_29(buf + 262144, 18);
+    helper_29(buf + 524288, 18);
+    helper_29(buf + 786432, 18);
+    helper_29(buf + 1048576, 18);
+    helper_29(buf + 1310720, 18);
+    helper_29(buf + 1572864, 18);
+    helper_29(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8581,7 +9168,18 @@ inline void helper_29(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 536870912; j += 16777216) {
+    return;
+  }
+  if (k == 24) {
+    helper_29(buf + 0, 21);
+    helper_29(buf + 2097152, 21);
+    helper_29(buf + 4194304, 21);
+    helper_29(buf + 6291456, 21);
+    helper_29(buf + 8388608, 21);
+    helper_29(buf + 10485760, 21);
+    helper_29(buf + 12582912, 21);
+    helper_29(buf + 14680064, 21);
+  for (int j = 0; j < 16777216; j += 16777216) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8628,7 +9226,18 @@ inline void helper_29(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 536870912; j += 134217728) {
+    return;
+  }
+  if (k == 27) {
+    helper_29(buf + 0, 24);
+    helper_29(buf + 16777216, 24);
+    helper_29(buf + 33554432, 24);
+    helper_29(buf + 50331648, 24);
+    helper_29(buf + 67108864, 24);
+    helper_29(buf + 83886080, 24);
+    helper_29(buf + 100663296, 24);
+    helper_29(buf + 117440512, 24);
+  for (int j = 0; j < 134217728; j += 134217728) {
     for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8675,6 +9284,13 @@ inline void helper_29(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 29) {
+    helper_29(buf + 0, 27);
+    helper_29(buf + 134217728, 27);
+    helper_29(buf + 268435456, 27);
+    helper_29(buf + 402653184, 27);
   for (int j = 0; j < 536870912; j += 536870912) {
     for (int k = 0; k < 134217728; k += 8) {
       __asm__ volatile (
@@ -8698,10 +9314,13 @@ inline void helper_29(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
-inline void helper_30(float *buf) {
-  for (int j = 0; j < 1073741824; j += 64) {
+void helper_30(float *buf, int k) {
+  if (k == 12) {
+  for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8876,7 +9495,7 @@ inline void helper_30(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1073741824; j += 512) {
+  for (int j = 0; j < 4096; j += 512) {
     for (int k = 0; k < 64; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8923,7 +9542,7 @@ inline void helper_30(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1073741824; j += 4096) {
+  for (int j = 0; j < 4096; j += 4096) {
     for (int k = 0; k < 512; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -8970,7 +9589,18 @@ inline void helper_30(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1073741824; j += 32768) {
+    return;
+  }
+  if (k == 15) {
+    helper_30(buf + 0, 12);
+    helper_30(buf + 4096, 12);
+    helper_30(buf + 8192, 12);
+    helper_30(buf + 12288, 12);
+    helper_30(buf + 16384, 12);
+    helper_30(buf + 20480, 12);
+    helper_30(buf + 24576, 12);
+    helper_30(buf + 28672, 12);
+  for (int j = 0; j < 32768; j += 32768) {
     for (int k = 0; k < 4096; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -9017,7 +9647,18 @@ inline void helper_30(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1073741824; j += 262144) {
+    return;
+  }
+  if (k == 18) {
+    helper_30(buf + 0, 15);
+    helper_30(buf + 32768, 15);
+    helper_30(buf + 65536, 15);
+    helper_30(buf + 98304, 15);
+    helper_30(buf + 131072, 15);
+    helper_30(buf + 163840, 15);
+    helper_30(buf + 196608, 15);
+    helper_30(buf + 229376, 15);
+  for (int j = 0; j < 262144; j += 262144) {
     for (int k = 0; k < 32768; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -9064,7 +9705,18 @@ inline void helper_30(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1073741824; j += 2097152) {
+    return;
+  }
+  if (k == 21) {
+    helper_30(buf + 0, 18);
+    helper_30(buf + 262144, 18);
+    helper_30(buf + 524288, 18);
+    helper_30(buf + 786432, 18);
+    helper_30(buf + 1048576, 18);
+    helper_30(buf + 1310720, 18);
+    helper_30(buf + 1572864, 18);
+    helper_30(buf + 1835008, 18);
+  for (int j = 0; j < 2097152; j += 2097152) {
     for (int k = 0; k < 262144; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -9111,7 +9763,18 @@ inline void helper_30(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1073741824; j += 16777216) {
+    return;
+  }
+  if (k == 24) {
+    helper_30(buf + 0, 21);
+    helper_30(buf + 2097152, 21);
+    helper_30(buf + 4194304, 21);
+    helper_30(buf + 6291456, 21);
+    helper_30(buf + 8388608, 21);
+    helper_30(buf + 10485760, 21);
+    helper_30(buf + 12582912, 21);
+    helper_30(buf + 14680064, 21);
+  for (int j = 0; j < 16777216; j += 16777216) {
     for (int k = 0; k < 2097152; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -9158,7 +9821,18 @@ inline void helper_30(float *buf) {
       );
     }
   }
-  for (int j = 0; j < 1073741824; j += 134217728) {
+    return;
+  }
+  if (k == 27) {
+    helper_30(buf + 0, 24);
+    helper_30(buf + 16777216, 24);
+    helper_30(buf + 33554432, 24);
+    helper_30(buf + 50331648, 24);
+    helper_30(buf + 67108864, 24);
+    helper_30(buf + 83886080, 24);
+    helper_30(buf + 100663296, 24);
+    helper_30(buf + 117440512, 24);
+  for (int j = 0; j < 134217728; j += 134217728) {
     for (int k = 0; k < 16777216; k += 8) {
       __asm__ volatile (
         "vmovups (%0), %%ymm0\n"
@@ -9205,6 +9879,17 @@ inline void helper_30(float *buf) {
       );
     }
   }
+    return;
+  }
+  if (k == 30) {
+    helper_30(buf + 0, 27);
+    helper_30(buf + 134217728, 27);
+    helper_30(buf + 268435456, 27);
+    helper_30(buf + 402653184, 27);
+    helper_30(buf + 536870912, 27);
+    helper_30(buf + 671088640, 27);
+    helper_30(buf + 805306368, 27);
+    helper_30(buf + 939524096, 27);
   for (int j = 0; j < 1073741824; j += 1073741824) {
     for (int k = 0; k < 134217728; k += 8) {
       __asm__ volatile (
@@ -9252,6 +9937,8 @@ inline void helper_30(float *buf) {
       );
     }
   }
+    return;
+  }
 }
 
 void fht(float *buf, int log_n) {
@@ -9294,58 +9981,58 @@ void fht(float *buf, int log_n) {
     helper_12(buf);
   }
   else if (log_n == 13) {
-    helper_13(buf);
+    helper_13(buf, 13);
   }
   else if (log_n == 14) {
-    helper_14(buf);
+    helper_14(buf, 14);
   }
   else if (log_n == 15) {
-    helper_15(buf);
+    helper_15(buf, 15);
   }
   else if (log_n == 16) {
-    helper_16(buf);
+    helper_16(buf, 16);
   }
   else if (log_n == 17) {
-    helper_17(buf);
+    helper_17(buf, 17);
   }
   else if (log_n == 18) {
-    helper_18(buf);
+    helper_18(buf, 18);
   }
   else if (log_n == 19) {
-    helper_19(buf);
+    helper_19(buf, 19);
   }
   else if (log_n == 20) {
-    helper_20(buf);
+    helper_20(buf, 20);
   }
   else if (log_n == 21) {
-    helper_21(buf);
+    helper_21(buf, 21);
   }
   else if (log_n == 22) {
-    helper_22(buf);
+    helper_22(buf, 22);
   }
   else if (log_n == 23) {
-    helper_23(buf);
+    helper_23(buf, 23);
   }
   else if (log_n == 24) {
-    helper_24(buf);
+    helper_24(buf, 24);
   }
   else if (log_n == 25) {
-    helper_25(buf);
+    helper_25(buf, 25);
   }
   else if (log_n == 26) {
-    helper_26(buf);
+    helper_26(buf, 26);
   }
   else if (log_n == 27) {
-    helper_27(buf);
+    helper_27(buf, 27);
   }
   else if (log_n == 28) {
-    helper_28(buf);
+    helper_28(buf, 28);
   }
   else if (log_n == 29) {
-    helper_29(buf);
+    helper_29(buf, 29);
   }
   else if (log_n == 30) {
-    helper_30(buf);
+    helper_30(buf, 30);
   }
   else {
   }
