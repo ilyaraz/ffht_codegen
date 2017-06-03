@@ -1,4 +1,5 @@
 #include "fht.h"
+inline void helper_float_1(float *buf);
 inline void helper_float_1(float *buf) {
   for (int j = 0; j < 2; j += 2) {
     for (int k = 0; k < 1; ++k) {
@@ -9,6 +10,7 @@ inline void helper_float_1(float *buf) {
     }
   }
 }
+inline void helper_float_2(float *buf);
 inline void helper_float_2(float *buf) {
   for (int j = 0; j < 4; j += 2) {
     for (int k = 0; k < 1; ++k) {
@@ -27,6 +29,7 @@ inline void helper_float_2(float *buf) {
     }
   }
 }
+inline void helper_float_3(float *buf);
 inline void helper_float_3(float *buf) {
   for (int j = 0; j < 8; j += 8) {
     __asm__ volatile (
@@ -52,6 +55,7 @@ inline void helper_float_3(float *buf) {
     );
   }
 }
+inline void helper_float_4(float *buf);
 inline void helper_float_4(float *buf) {
   for (int j = 0; j < 16; j += 16) {
     for (int k = 0; k < 8; k += 8) {
@@ -99,6 +103,7 @@ inline void helper_float_4(float *buf) {
     }
   }
 }
+inline void helper_float_5(float *buf);
 inline void helper_float_5(float *buf) {
   for (int j = 0; j < 32; j += 32) {
     for (int k = 0; k < 8; k += 8) {
@@ -188,6 +193,7 @@ inline void helper_float_5(float *buf) {
     }
   }
 }
+inline void helper_float_6(float *buf);
 inline void helper_float_6(float *buf) {
   for (int j = 0; j < 64; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -365,6 +371,7 @@ inline void helper_float_6(float *buf) {
     }
   }
 }
+inline void helper_float_7(float *buf);
 inline void helper_float_7(float *buf) {
   for (int j = 0; j < 128; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -555,6 +562,7 @@ inline void helper_float_7(float *buf) {
     }
   }
 }
+inline void helper_float_8(float *buf);
 inline void helper_float_8(float *buf) {
   for (int j = 0; j < 256; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -755,6 +763,7 @@ inline void helper_float_8(float *buf) {
     }
   }
 }
+inline void helper_float_9(float *buf);
 inline void helper_float_9(float *buf) {
   for (int j = 0; j < 512; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -979,6 +988,7 @@ inline void helper_float_9(float *buf) {
     }
   }
 }
+inline void helper_float_10(float *buf);
 inline void helper_float_10(float *buf) {
   for (int j = 0; j < 1024; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -1216,6 +1226,7 @@ inline void helper_float_10(float *buf) {
     }
   }
 }
+inline void helper_float_11(float *buf);
 inline void helper_float_11(float *buf) {
   for (int j = 0; j < 2048; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -1463,6 +1474,7 @@ inline void helper_float_11(float *buf) {
     }
   }
 }
+inline void helper_float_12(float *buf);
 inline void helper_float_12(float *buf) {
   for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -1734,6 +1746,7 @@ inline void helper_float_12(float *buf) {
     }
   }
 }
+inline void helper_float_13(float *buf);
 inline void helper_float_13(float *buf) {
   for (int j = 0; j < 8192; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -2018,6 +2031,7 @@ inline void helper_float_13(float *buf) {
     }
   }
 }
+inline void helper_float_14(float *buf);
 inline void helper_float_14(float *buf) {
   for (int j = 0; j < 16384; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -2312,6 +2326,7 @@ inline void helper_float_14(float *buf) {
     }
   }
 }
+inline void helper_float_15(float *buf);
 inline void helper_float_15(float *buf) {
   for (int j = 0; j < 32768; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -2630,6 +2645,7 @@ inline void helper_float_15(float *buf) {
     }
   }
 }
+inline void helper_float_16(float *buf);
 inline void helper_float_16(float *buf) {
   for (int j = 0; j < 65536; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -2961,6 +2977,7 @@ inline void helper_float_16(float *buf) {
     }
   }
 }
+inline void helper_float_17(float *buf);
 inline void helper_float_17(float *buf) {
   for (int j = 0; j < 131072; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -3302,6 +3319,7 @@ inline void helper_float_17(float *buf) {
     }
   }
 }
+inline void helper_float_18(float *buf);
 inline void helper_float_18(float *buf) {
   for (int j = 0; j < 262144; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -3667,6 +3685,7 @@ inline void helper_float_18(float *buf) {
     }
   }
 }
+inline void helper_float_19(float *buf);
 inline void helper_float_19(float *buf) {
   for (int j = 0; j < 524288; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -4045,6 +4064,7 @@ inline void helper_float_19(float *buf) {
     }
   }
 }
+inline void helper_float_20(float *buf);
 inline void helper_float_20(float *buf) {
   for (int j = 0; j < 1048576; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -4433,6 +4453,7 @@ inline void helper_float_20(float *buf) {
     }
   }
 }
+inline void helper_float_21(float *buf);
 inline void helper_float_21(float *buf) {
   for (int j = 0; j < 2097152; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -4845,6 +4866,7 @@ inline void helper_float_21(float *buf) {
     }
   }
 }
+inline void helper_float_22(float *buf);
 inline void helper_float_22(float *buf) {
   for (int j = 0; j < 4194304; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -5270,6 +5292,7 @@ inline void helper_float_22(float *buf) {
     }
   }
 }
+inline void helper_float_23(float *buf);
 inline void helper_float_23(float *buf) {
   for (int j = 0; j < 8388608; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -5705,6 +5728,7 @@ inline void helper_float_23(float *buf) {
     }
   }
 }
+inline void helper_float_24(float *buf);
 inline void helper_float_24(float *buf) {
   for (int j = 0; j < 16777216; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -6164,6 +6188,7 @@ inline void helper_float_24(float *buf) {
     }
   }
 }
+inline void helper_float_25(float *buf);
 inline void helper_float_25(float *buf) {
   for (int j = 0; j < 33554432; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -6636,6 +6661,7 @@ inline void helper_float_25(float *buf) {
     }
   }
 }
+inline void helper_float_26(float *buf);
 inline void helper_float_26(float *buf) {
   for (int j = 0; j < 67108864; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -7118,6 +7144,7 @@ inline void helper_float_26(float *buf) {
     }
   }
 }
+inline void helper_float_27(float *buf);
 inline void helper_float_27(float *buf) {
   for (int j = 0; j < 134217728; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -7624,6 +7651,7 @@ inline void helper_float_27(float *buf) {
     }
   }
 }
+inline void helper_float_28(float *buf);
 inline void helper_float_28(float *buf) {
   for (int j = 0; j < 268435456; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -8143,6 +8171,7 @@ inline void helper_float_28(float *buf) {
     }
   }
 }
+inline void helper_float_29(float *buf);
 inline void helper_float_29(float *buf) {
   for (int j = 0; j < 536870912; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -8672,6 +8701,7 @@ inline void helper_float_29(float *buf) {
     }
   }
 }
+inline void helper_float_30(float *buf);
 inline void helper_float_30(float *buf) {
   for (int j = 0; j < 1073741824; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -9348,6 +9378,7 @@ int fht_float(float *buf, int log_n) {
   }
   return 1;
 }
+inline void helper_double_1(double *buf);
 inline void helper_double_1(double *buf) {
   for (int j = 0; j < 2; j += 2) {
     for (int k = 0; k < 1; ++k) {
@@ -9358,6 +9389,7 @@ inline void helper_double_1(double *buf) {
     }
   }
 }
+inline void helper_double_2(double *buf);
 inline void helper_double_2(double *buf) {
   for (int j = 0; j < 4; j += 4) {
     __asm__ volatile (
@@ -9377,6 +9409,7 @@ inline void helper_double_2(double *buf) {
     );
   }
 }
+inline void helper_double_3(double *buf);
 inline void helper_double_3(double *buf) {
   for (int j = 0; j < 8; j += 8) {
     for (int k = 0; k < 4; k += 4) {
@@ -9412,6 +9445,7 @@ inline void helper_double_3(double *buf) {
     }
   }
 }
+inline void helper_double_4(double *buf);
 inline void helper_double_4(double *buf) {
   for (int j = 0; j < 16; j += 16) {
     for (int k = 0; k < 4; k += 4) {
@@ -9477,6 +9511,7 @@ inline void helper_double_4(double *buf) {
     }
   }
 }
+inline void helper_double_5(double *buf);
 inline void helper_double_5(double *buf) {
   for (int j = 0; j < 32; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -9606,6 +9641,7 @@ inline void helper_double_5(double *buf) {
     }
   }
 }
+inline void helper_double_6(double *buf);
 inline void helper_double_6(double *buf) {
   for (int j = 0; j < 64; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -9748,6 +9784,7 @@ inline void helper_double_6(double *buf) {
     }
   }
 }
+inline void helper_double_7(double *buf);
 inline void helper_double_7(double *buf) {
   for (int j = 0; j < 128; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -9900,6 +9937,7 @@ inline void helper_double_7(double *buf) {
     }
   }
 }
+inline void helper_double_8(double *buf);
 inline void helper_double_8(double *buf) {
   for (int j = 0; j < 256; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10076,6 +10114,7 @@ inline void helper_double_8(double *buf) {
     }
   }
 }
+inline void helper_double_9(double *buf);
 inline void helper_double_9(double *buf) {
   for (int j = 0; j < 512; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10265,6 +10304,7 @@ inline void helper_double_9(double *buf) {
     }
   }
 }
+inline void helper_double_10(double *buf);
 inline void helper_double_10(double *buf) {
   for (int j = 0; j < 1024; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10464,6 +10504,7 @@ inline void helper_double_10(double *buf) {
     }
   }
 }
+inline void helper_double_11(double *buf);
 inline void helper_double_11(double *buf) {
   for (int j = 0; j < 2048; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10687,6 +10728,7 @@ inline void helper_double_11(double *buf) {
     }
   }
 }
+inline void helper_double_12(double *buf);
 inline void helper_double_12(double *buf) {
   for (int j = 0; j < 4096; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10923,6 +10965,7 @@ inline void helper_double_12(double *buf) {
     }
   }
 }
+inline void helper_double_13(double *buf);
 inline void helper_double_13(double *buf) {
   for (int j = 0; j < 8192; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -11169,6 +11212,7 @@ inline void helper_double_13(double *buf) {
     }
   }
 }
+inline void helper_double_14(double *buf);
 inline void helper_double_14(double *buf) {
   for (int j = 0; j < 16384; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -11439,6 +11483,7 @@ inline void helper_double_14(double *buf) {
     }
   }
 }
+inline void helper_double_15(double *buf);
 inline void helper_double_15(double *buf) {
   for (int j = 0; j < 32768; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -11722,6 +11767,7 @@ inline void helper_double_15(double *buf) {
     }
   }
 }
+inline void helper_double_16(double *buf);
 inline void helper_double_16(double *buf) {
   for (int j = 0; j < 65536; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -12015,6 +12061,7 @@ inline void helper_double_16(double *buf) {
     }
   }
 }
+inline void helper_double_17(double *buf);
 inline void helper_double_17(double *buf) {
   for (int j = 0; j < 131072; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -12332,6 +12379,7 @@ inline void helper_double_17(double *buf) {
     }
   }
 }
+inline void helper_double_18(double *buf);
 inline void helper_double_18(double *buf) {
   for (int j = 0; j < 262144; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -12662,6 +12710,7 @@ inline void helper_double_18(double *buf) {
     }
   }
 }
+inline void helper_double_19(double *buf);
 inline void helper_double_19(double *buf) {
   for (int j = 0; j < 524288; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -13002,6 +13051,7 @@ inline void helper_double_19(double *buf) {
     }
   }
 }
+inline void helper_double_20(double *buf);
 inline void helper_double_20(double *buf) {
   for (int j = 0; j < 1048576; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -13366,6 +13416,7 @@ inline void helper_double_20(double *buf) {
     }
   }
 }
+inline void helper_double_21(double *buf);
 inline void helper_double_21(double *buf) {
   for (int j = 0; j < 2097152; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -13743,6 +13794,7 @@ inline void helper_double_21(double *buf) {
     }
   }
 }
+inline void helper_double_22(double *buf);
 inline void helper_double_22(double *buf) {
   for (int j = 0; j < 4194304; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -14130,6 +14182,7 @@ inline void helper_double_22(double *buf) {
     }
   }
 }
+inline void helper_double_23(double *buf);
 inline void helper_double_23(double *buf) {
   for (int j = 0; j < 8388608; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -14541,6 +14594,7 @@ inline void helper_double_23(double *buf) {
     }
   }
 }
+inline void helper_double_24(double *buf);
 inline void helper_double_24(double *buf) {
   for (int j = 0; j < 16777216; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -14965,6 +15019,7 @@ inline void helper_double_24(double *buf) {
     }
   }
 }
+inline void helper_double_25(double *buf);
 inline void helper_double_25(double *buf) {
   for (int j = 0; j < 33554432; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -15399,6 +15454,7 @@ inline void helper_double_25(double *buf) {
     }
   }
 }
+inline void helper_double_26(double *buf);
 inline void helper_double_26(double *buf) {
   for (int j = 0; j < 67108864; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -15857,6 +15913,7 @@ inline void helper_double_26(double *buf) {
     }
   }
 }
+inline void helper_double_27(double *buf);
 inline void helper_double_27(double *buf) {
   for (int j = 0; j < 134217728; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -16328,6 +16385,7 @@ inline void helper_double_27(double *buf) {
     }
   }
 }
+inline void helper_double_28(double *buf);
 inline void helper_double_28(double *buf) {
   for (int j = 0; j < 268435456; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -16809,6 +16867,7 @@ inline void helper_double_28(double *buf) {
     }
   }
 }
+inline void helper_double_29(double *buf);
 inline void helper_double_29(double *buf) {
   for (int j = 0; j < 536870912; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -17314,6 +17373,7 @@ inline void helper_double_29(double *buf) {
     }
   }
 }
+inline void helper_double_30(double *buf);
 inline void helper_double_30(double *buf) {
   for (int j = 0; j < 1073741824; j += 32) {
     for (int k = 0; k < 4; k += 4) {

@@ -167,7 +167,9 @@ def double_avx_composite_step(buf_name, log_n, from_it, to_it, ident=''):
     return composite_step(buf_name, log_n, from_it, to_it, 2, ['ymm%d' % x for x in range(16)], 'vmovupd', [double_avx_0, double_avx_1], double_avx_2_etc, ident)
 
 def plain_unmerged(type_name, log_n):
-    res  = "inline void helper_%s_%d(%s *buf) {\n" % (type_name, log_n, type_name)
+    signature = "inline void helper_%s_%d(%s *buf)" % (type_name, log_n, type_name)
+    res  = '%s;\n' % signature
+    res += '%s {\n' % signature
     for i in range(log_n):
         res += plain_step(type_name, 'buf', log_n, i, '  ')
     res += "}\n"
@@ -178,7 +180,9 @@ def greedy_merged(type_name, log_n, composite_step):
         composite_step('buf', log_n, 0, 0)
     except Exception:
         raise Exception('log_n is too small: %d' % log_n)
-    res  = 'inline void helper_%s_%d(%s *buf) {\n' % (type_name, log_n, type_name)
+    signature = 'inline void helper_%s_%d(%s *buf)' % (type_name, log_n, type_name)
+    res  = '%s;\n' % signature
+    res += '%s {\n' % signature
     cur_it = 0
     while cur_it < log_n:
         cur_to_it = log_n
