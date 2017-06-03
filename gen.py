@@ -80,7 +80,7 @@ def double_avx_2_etc(from_register_0, from_register_1, to_register_0, to_registe
     res += ident + '"vsubpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_1)
     return res
 
-def float_plain_step(log_n, it, ident=''):
+def plain_step(type_name, buf_name, log_n, it, ident=''):
     if log_n <= 0:
         raise Exception("log_n must be positive")
     if it < 0:
@@ -90,28 +90,10 @@ def float_plain_step(log_n, it, ident=''):
     n = 1 << log_n
     res  = ident + "for (int j = 0; j < %d; j += %d) {\n" % (n, 1 << (it + 1))
     res += ident + "  for (int k = 0; k < %d; ++k) {\n" % (1 << it)
-    res += ident + "    float u = buf[j + k];\n"
-    res += ident + "    float v = buf[j + k + %d];\n" % (1 << it)
-    res += ident + "    buf[j + k] = u + v;\n"
-    res += ident + "    buf[j + k + %d] = u - v;\n" % (1 << it)
-    res += ident + "  }\n"
-    res += ident + "}\n"
-    return res
-
-def double_plain_step(log_n, it, ident=''):
-    if log_n <= 0:
-        raise Exception("log_n must be positive")
-    if it < 0:
-        raise Exception("it must be non-negative")
-    if it >= log_n:
-        raise Exception("it must be smaller than log_n")
-    n = 1 << log_n
-    res  = ident + "for (int j = 0; j < %d; j += %d) {\n" % (n, 1 << (it + 1))
-    res += ident + "  for (int k = 0; k < %d; ++k) {\n" % (1 << it)
-    res += ident + "    double u = buf[j + k];\n"
-    res += ident + "    double v = buf[j + k + %d];\n" % (1 << it)
-    res += ident + "    buf[j + k] = u + v;\n"
-    res += ident + "    buf[j + k + %d] = u - v;\n" % (1 << it)
+    res += ident + "    %s u = %s[j + k];\n" % (type_name, buf_name)
+    res += ident + "    %s v = %s[j + k + %d];\n" % (type_name, buf_name, 1 << it)
+    res += ident + "    %s[j + k] = u + v;\n" % buf_name
+    res += ident + "    %s[j + k + %d] = u - v;\n" % (buf_name, 1 << it)
     res += ident + "  }\n"
     res += ident + "}\n"
     return res
@@ -271,7 +253,7 @@ def float_plain_unmerged(log_n):
     n = 1 << log_n
     res  = "inline void helper_%d(float *buf) {\n" % log_n
     for i in range(0, log_n):
-        res += float_plain_step(log_n, i, '  ')
+        res += plain_step('float', 'buf', log_n, i, '  ')
     res += "}\n"
     return res
 
@@ -279,7 +261,7 @@ def double_plain_unmerged(log_n):
     n = 1 << log_n
     res  = "inline void double_helper_%d(double *buf) {\n" % log_n
     for i in range(0, log_n):
-        res += double_plain_step(log_n, i, '  ')
+        res += plain_step('double', 'buf', log_n, i, '  ')
     res += "}\n"
     return res
 
