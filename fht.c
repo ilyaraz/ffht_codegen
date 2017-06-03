@@ -9256,6 +9256,9 @@ inline void helper_float_30(float *buf) {
   }
 }
 int fht_float(float *buf, int log_n) {
+  if (log_n == 0) {
+    return 0;
+  }
   if (log_n == 1) {
     helper_float_1(buf);
     return 0;
@@ -17893,6 +17896,9 @@ inline void helper_double_30(double *buf) {
   }
 }
 int fht_double(double *buf, int log_n) {
+  if (log_n == 0) {
+    return 0;
+  }
   if (log_n == 1) {
     helper_double_1(buf);
     return 0;

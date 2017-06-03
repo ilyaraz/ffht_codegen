@@ -208,6 +208,9 @@ if __name__ == '__main__':
             except Exception:
                 res += plain_unmerged(type_name, i)
         res += 'int fht_%s(%s *buf, int log_n) {\n' % (type_name, type_name)
+        res += '  if (log_n == 0) {\n'
+        res += '    return 0;\n'
+        res += '  }\n'
         for i in range(1, max_log_n + 1):
             res += '  if (log_n == %d) {\n' % i
             res += '    helper_%s_%d(buf);\n' % (type_name, i)
