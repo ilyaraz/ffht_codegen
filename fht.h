@@ -5,8 +5,8 @@
 extern "C" {
 #endif
 
-void fht_float(float *buf, int log_n);
-void fht_double(double *buf, int log_n);
+int fht_float(float *buf, int log_n);
+int fht_double(double *buf, int log_n);
 
 #ifdef __cplusplus
 }

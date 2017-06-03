@@ -1,3 +1,7 @@
+import sys
+
+max_log_n = 30
+
 def float_avx_0(register, aux_registers, ident=''):
     """
     register must be disjoint from aux_registers
@@ -98,7 +102,7 @@ def plain_step(type_name, buf_name, log_n, it, ident=''):
     res += ident + "}\n"
     return res
 
-def composite_step(log_n, from_it, to_it, log_w, registers, move_instruction, special_steps, main_step, ident=''):
+def composite_step(buf_name, log_n, from_it, to_it, log_w, registers, move_instruction, special_steps, main_step, ident=''):
     if log_n < log_w:
         raise Exception('need at least %d elements' % (1 << log_w))
     num_registers = len(registers)
@@ -126,7 +130,7 @@ def composite_step(log_n, from_it, to_it, log_w, registers, move_instruction, sp
         for it in range(from_it, to_it):
             res += special_steps[it](input_registers[0], output_registers, ident + '    ')
         res += ident + '    "%s %%%%%s, (%%0)\\n"\n' % (move_instruction, input_registers[0])
-        res += ident + '    :: "r"(buf + j) : %s, "memory"\n' % clobber
+        res += ident + '    :: "r"(%s + j) : %s, "memory"\n' % (buf_name, clobber)
         res += ident + '  );\n'
         res += ident + '}\n'
         return res
@@ -150,167 +154,61 @@ def composite_step(log_n, from_it, to_it, log_w, registers, move_instruction, sp
         output_registers = tmp
     for l in range(1 << num_nontrivial_levels):
         res += ident + '      "%s %%%%%s, (%%%d)\\n"\n' % (move_instruction, input_registers[l], l)
-    res += ident + '      :: %s : %s, "memory"\n' % (', '.join(['"r"(buf + %s)' % x for x in subcube]), clobber)
+    res += ident + '      :: %s : %s, "memory"\n' % (', '.join(['"r"(%s + %s)' % (buf_name, x) for x in subcube]), clobber)
     res += ident + '    );\n'
     res += ident + '  }\n'
     res += ident + '}\n'
     return res
 
-def float_avx_composite_step(log_n, from_it, to_it, ident=''):
-    return composite_step(log_n, from_it, to_it, 3, ['ymm%d' % x for x in range(16)], 'vmovups', [float_avx_0, float_avx_1, float_avx_2], float_avx_3_etc, ident)
+def float_avx_composite_step(buf_name, log_n, from_it, to_it, ident=''):
+    return composite_step(buf_name, log_n, from_it, to_it, 3, ['ymm%d' % x for x in range(16)], 'vmovups', [float_avx_0, float_avx_1, float_avx_2], float_avx_3_etc, ident)
 
-def double_avx_composite_step(log_n, from_it, to_it, ident=''):
-    return composite_step(log_n, from_it, to_it, 2, ['ymm%d' % x for x in range(16)], 'vmovupd', [double_avx_0, double_avx_1], double_avx_2_etc, ident)
+def double_avx_composite_step(buf_name, log_n, from_it, to_it, ident=''):
+    return composite_step(buf_name, log_n, from_it, to_it, 2, ['ymm%d' % x for x in range(16)], 'vmovupd', [double_avx_0, double_avx_1], double_avx_2_etc, ident)
 
-def float_avx_greedy_merged(log_n):
-    res  = "inline void helper_%d(float *buf);\n" % log_n
-    res += "inline void helper_%d(float *buf) {\n" % log_n
-    if log_n < 6:
-        res += float_avx_composite_step(log_n, 0, log_n, '  ')
-    else:
-        res += float_avx_composite_step(log_n, 0, 6, '  ')
-        cur = 6
-        while cur < log_n:
-            new_end = cur + 3
-            res += float_avx_composite_step(log_n, cur, min(new_end, log_n), '  ')
-            cur = new_end
+def plain_unmerged(type_name, log_n):
+    res  = "inline void helper_%s_%d(%s *buf) {\n" % (type_name, log_n, type_name)
+    for i in range(log_n):
+        res += plain_step(type_name, 'buf', log_n, i, '  ')
     res += "}\n"
     return res
 
-def double_avx_greedy_merged(log_n):
-    res  = "inline void double_helper_%d(double *buf);\n" % log_n
-    res += "inline void double_helper_%d(double *buf) {\n" % log_n
-    if log_n < 5:
-        res += double_avx_composite_step(log_n, 0, log_n, '  ')
-    else:
-        res += double_avx_composite_step(log_n, 0, 5, '  ')
-        cur = 5
-        while cur < log_n:
-            new_end = cur + 3
-            res += double_avx_composite_step(log_n, cur, min(new_end, log_n), '  ')
-            cur = new_end
-    res += "}\n"
+def greedy_merged(type_name, log_n, composite_step):
+    try:
+        composite_step('buf', log_n, 0, 0)
+    except Exception:
+        raise Exception('log_n is too small: %d' % log_n)
+    res  = 'inline void helper_%s_%d(%s *buf) {\n' % (type_name, log_n, type_name)
+    cur_it = 0
+    while cur_it < log_n:
+        cur_to_it = log_n
+        while True:
+            try:
+                composite_step('buf', log_n, cur_it, cur_to_it)
+                break
+            except Exception:
+                cur_to_it -= 1
+                continue
+        res += composite_step('buf', log_n, cur_it, cur_to_it, '  ')
+        cur_it = cur_to_it
+    res += '}\n'
     return res
 
-def float_avx_greedy_merged_recursive(log_n):
-    res  = "void helper_%d(float *buf, int depth);\n" % log_n
-    res += "void helper_%d(float *buf, int depth) {\n" % log_n
-    res += "  if (depth == 12) {\n"
-    res += float_avx_composite_step(12, 0, 6, '    ')
-    res += float_avx_composite_step(12, 6, 9, '    ')
-    res += float_avx_composite_step(12, 9, 12, '    ')
-    res += "    return;\n"
-    res += "  }\n"
-    cur = 15
-    while cur <= log_n:
-        res += "  if (depth == %d) {\n" % cur
-        for i in range(8):
-            res += "    helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (cur - 3)), (cur - 3))
-        res += float_avx_composite_step(cur, cur - 3, cur, '    ');
-        res += "    return;\n"
-        res += "  }\n"
-        cur += 3
-    if log_n % 3 != 0:
-        res += "  if (depth == %d) {\n" % log_n
-        for i in range(1 << (log_n % 3)):
-            res += "    helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (log_n - log_n % 3)), (log_n - log_n % 3))
-        res += float_avx_composite_step(log_n, log_n - log_n % 3, log_n, '    ');
-        res += "    return;\n"
-        res += "  }\n"
-        cur += 3
-    res += "}\n"
-    return res
-
-def double_avx_greedy_merged_recursive(log_n):
-    res  = "void double_helper_%d(double *buf, int depth);\n" % log_n
-    res += "void double_helper_%d(double *buf, int depth) {\n" % log_n
-    res += "  if (depth == 11) {\n"
-    res += double_avx_composite_step(11, 0, 5, '    ')
-    res += double_avx_composite_step(11, 5, 8, '    ')
-    res += double_avx_composite_step(11, 8, 11, '    ')
-    res += "    return;\n"
-    res += "  }\n"
-    cur = 14
-    while cur <= log_n:
-        res += "  if (depth == %d) {\n" % cur
-        for i in range(8):
-            res += "    double_helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (cur - 3)), (cur - 3))
-        res += double_avx_composite_step(cur, cur - 3, cur, '    ');
-        res += "    return;\n"
-        res += "  }\n"
-        cur += 3
-    if cur != log_n + 3:
-        res += "  if (depth == %d) {\n" % log_n
-        for i in range(1 << (log_n - cur + 3)):
-            res += "    double_helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (cur - 3)), (cur - 3))
-        res += double_avx_composite_step(log_n, cur - 3, log_n, '    ');
-        res += "    return;\n"
-        res += "  }\n"
-    res += "}\n"
-    return res
-
-def float_plain_unmerged(log_n):
-    n = 1 << log_n
-    res  = "inline void helper_%d(float *buf) {\n" % log_n
-    for i in range(0, log_n):
-        res += plain_step('float', 'buf', log_n, i, '  ')
-    res += "}\n"
-    return res
-
-def double_plain_unmerged(log_n):
-    n = 1 << log_n
-    res  = "inline void double_helper_%d(double *buf) {\n" % log_n
-    for i in range(0, log_n):
-        res += plain_step('double', 'buf', log_n, i, '  ')
-    res += "}\n"
-    return res
-
-print '#include "fht.h"\n'
-
-for i in range(1, 31):
-    if i < 3:
-        print float_plain_unmerged(i)
-    elif i <= 12:
-        print float_avx_greedy_merged(i)
-    else:
-        print float_avx_greedy_merged_recursive(i)
-
-for i in range(1, 31):
-    if i < 2:
-        print double_plain_unmerged(i)
-    elif i <= 11:
-        print double_avx_greedy_merged(i)
-    else:
-        print double_avx_greedy_merged_recursive(i)
-
-dispatch  = "void fht_float(float *buf, int log_n) {\n"
-dispatch += "  if (log_n == 0) {\n"
-dispatch += "  }\n"
-for i in range(1, 31):
-    if i <= 12:
-        dispatch += "  else if (log_n == %d) {\n" % i
-        dispatch += '    helper_%d(buf);\n' % i
-        dispatch += "  }\n"
-    else:
-        dispatch += "  else if (log_n == %d) {\n" % i
-        dispatch += '    helper_%d(buf, %d);\n' % (i, i)
-        dispatch += "  }\n"
-dispatch += "  else {\n"
-dispatch += "  }\n"
-dispatch += "}\n"
-dispatch += "void fht_double(double *buf, int log_n) {\n"
-dispatch += "  if (log_n == 0) {\n"
-dispatch += "  }\n"
-for i in range(1, 31):
-    if i <= 11:
-        dispatch += "  else if (log_n == %d) {\n" % i
-        dispatch += '    double_helper_%d(buf);\n' % i
-        dispatch += "  }\n"
-    else:
-        dispatch += "  else if (log_n == %d) {\n" % i
-        dispatch += '    double_helper_%d(buf, %d);\n' % (i, i)
-        dispatch += "  }\n"
-dispatch += "  else {\n"
-dispatch += "  }\n"
-dispatch += "}\n"
-print dispatch
+if __name__ == '__main__':
+    res = '#include "fht.h"\n'
+    for (type_name, composite_step_generator) in [('float', float_avx_composite_step), ('double', double_avx_composite_step)]:
+        for i in range(1, max_log_n + 1):
+            try:
+                aux = greedy_merged(type_name, i, composite_step_generator)
+                res += aux
+            except Exception:
+                res += plain_unmerged(type_name, i)
+        res += 'int fht_%s(%s *buf, int log_n) {\n' % (type_name, type_name)
+        for i in range(1, max_log_n + 1):
+            res += '  if (log_n == %d) {\n' % i
+            res += '    helper_%s_%d(buf);\n' % (type_name, i)
+            res += '    return 0;\n'
+            res += '  }\n'
+        res += '  return 1;\n'
+        res += '}\n'
+    print res,
