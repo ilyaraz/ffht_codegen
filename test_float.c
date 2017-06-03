@@ -5,8 +5,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "routine.h"
+#include "fht.h"
 
+void dumb_fht(float *buf, int log_n);
 void dumb_fht(float *buf, int log_n) {
     int n = 1 << log_n;
     for (int i = 0; i < log_n; ++i) {
@@ -29,15 +30,15 @@ int main(void) {
         printf("%d ", log_n);
         int n = 1 << log_n;
         void *buf = malloc(sizeof(float) * n + 32);
-        void *start = buf;
-        while ((size_t)start % 32 != 0) ++start;
+        char *start = buf;
+        while ((size_t)start % 32 != 0) start = start + 1;
         float *a = (float*)start;
         float *aux = (float*)malloc(sizeof(double) * n);
         for (int i = 0; i < n; ++i) {
             a[i] = 1.0 - 2.0 * (rand() % 2);
             aux[i] = a[i];
         }
-        fht(a, log_n);
+        fht_float(a, log_n);
         dumb_fht(aux, log_n);
         double max_error = 0.0;
         for (int i = 0; i < n; ++i) {
@@ -53,7 +54,7 @@ int main(void) {
         for (int num_it = 10;; num_it *= 2) {
             clock_t tt1 = clock();
             for (int it = 0; it < num_it; ++it) {
-                fht(a, log_n);
+                fht_float(a, log_n);
             }
             clock_t tt2 = clock();
             double sec = (tt2 - tt1) / (CLOCKS_PER_SEC + 0.0);

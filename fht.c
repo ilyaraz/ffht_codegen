@@ -1,3 +1,5 @@
+#include "fht.h"
+
 inline void helper_1(float *buf) {
   for (int j = 0; j < 2; j += 2) {
     for (int k = 0; k < 1; ++k) {
@@ -28,6 +30,7 @@ inline void helper_2(float *buf) {
   }
 }
 
+inline void helper_3(float *buf);
 inline void helper_3(float *buf) {
   for (int j = 0; j < 8; j += 8) {
     __asm__ volatile (
@@ -54,6 +57,7 @@ inline void helper_3(float *buf) {
   }
 }
 
+inline void helper_4(float *buf);
 inline void helper_4(float *buf) {
   for (int j = 0; j < 16; j += 16) {
     for (int k = 0; k < 8; k += 8) {
@@ -102,6 +106,7 @@ inline void helper_4(float *buf) {
   }
 }
 
+inline void helper_5(float *buf);
 inline void helper_5(float *buf) {
   for (int j = 0; j < 32; j += 32) {
     for (int k = 0; k < 8; k += 8) {
@@ -192,6 +197,7 @@ inline void helper_5(float *buf) {
   }
 }
 
+inline void helper_6(float *buf);
 inline void helper_6(float *buf) {
   for (int j = 0; j < 64; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -370,6 +376,7 @@ inline void helper_6(float *buf) {
   }
 }
 
+inline void helper_7(float *buf);
 inline void helper_7(float *buf) {
   for (int j = 0; j < 128; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -561,6 +568,7 @@ inline void helper_7(float *buf) {
   }
 }
 
+inline void helper_8(float *buf);
 inline void helper_8(float *buf) {
   for (int j = 0; j < 256; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -762,6 +770,7 @@ inline void helper_8(float *buf) {
   }
 }
 
+inline void helper_9(float *buf);
 inline void helper_9(float *buf) {
   for (int j = 0; j < 512; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -987,6 +996,7 @@ inline void helper_9(float *buf) {
   }
 }
 
+inline void helper_10(float *buf);
 inline void helper_10(float *buf) {
   for (int j = 0; j < 1024; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -1225,6 +1235,7 @@ inline void helper_10(float *buf) {
   }
 }
 
+inline void helper_11(float *buf);
 inline void helper_11(float *buf) {
   for (int j = 0; j < 2048; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -1473,6 +1484,7 @@ inline void helper_11(float *buf) {
   }
 }
 
+inline void helper_12(float *buf);
 inline void helper_12(float *buf) {
   for (int j = 0; j < 4096; j += 64) {
     for (int k = 0; k < 8; k += 8) {
@@ -1745,8 +1757,9 @@ inline void helper_12(float *buf) {
   }
 }
 
-void helper_13(float *buf, int k) {
-  if (k == 12) {
+void helper_13(float *buf, int depth);
+void helper_13(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -2018,7 +2031,7 @@ void helper_13(float *buf, int k) {
     }
     return;
   }
-  if (k == 13) {
+  if (depth == 13) {
     helper_13(buf + 0, 12);
     helper_13(buf + 4096, 12);
     for (int j = 0; j < 8192; j += 8192) {
@@ -2038,8 +2051,9 @@ void helper_13(float *buf, int k) {
   }
 }
 
-void helper_14(float *buf, int k) {
-  if (k == 12) {
+void helper_14(float *buf, int depth);
+void helper_14(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -2311,7 +2325,7 @@ void helper_14(float *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     helper_14(buf + 0, 12);
     helper_14(buf + 4096, 12);
     helper_14(buf + 8192, 12);
@@ -2343,8 +2357,9 @@ void helper_14(float *buf, int k) {
   }
 }
 
-void helper_15(float *buf, int k) {
-  if (k == 12) {
+void helper_15(float *buf, int depth);
+void helper_15(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -2616,7 +2631,7 @@ void helper_15(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_15(buf + 0, 12);
     helper_15(buf + 4096, 12);
     helper_15(buf + 8192, 12);
@@ -2676,8 +2691,9 @@ void helper_15(float *buf, int k) {
   }
 }
 
-void helper_16(float *buf, int k) {
-  if (k == 12) {
+void helper_16(float *buf, int depth);
+void helper_16(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -2949,7 +2965,7 @@ void helper_16(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_16(buf + 0, 12);
     helper_16(buf + 4096, 12);
     helper_16(buf + 8192, 12);
@@ -3007,7 +3023,7 @@ void helper_16(float *buf, int k) {
     }
     return;
   }
-  if (k == 16) {
+  if (depth == 16) {
     helper_16(buf + 0, 15);
     helper_16(buf + 32768, 15);
     for (int j = 0; j < 65536; j += 65536) {
@@ -3027,8 +3043,9 @@ void helper_16(float *buf, int k) {
   }
 }
 
-void helper_17(float *buf, int k) {
-  if (k == 12) {
+void helper_17(float *buf, int depth);
+void helper_17(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -3300,7 +3317,7 @@ void helper_17(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_17(buf + 0, 12);
     helper_17(buf + 4096, 12);
     helper_17(buf + 8192, 12);
@@ -3358,7 +3375,7 @@ void helper_17(float *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     helper_17(buf + 0, 15);
     helper_17(buf + 32768, 15);
     helper_17(buf + 65536, 15);
@@ -3390,8 +3407,9 @@ void helper_17(float *buf, int k) {
   }
 }
 
-void helper_18(float *buf, int k) {
-  if (k == 12) {
+void helper_18(float *buf, int depth);
+void helper_18(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -3663,7 +3681,7 @@ void helper_18(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_18(buf + 0, 12);
     helper_18(buf + 4096, 12);
     helper_18(buf + 8192, 12);
@@ -3721,7 +3739,7 @@ void helper_18(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_18(buf + 0, 15);
     helper_18(buf + 32768, 15);
     helper_18(buf + 65536, 15);
@@ -3781,8 +3799,9 @@ void helper_18(float *buf, int k) {
   }
 }
 
-void helper_19(float *buf, int k) {
-  if (k == 12) {
+void helper_19(float *buf, int depth);
+void helper_19(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -4054,7 +4073,7 @@ void helper_19(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_19(buf + 0, 12);
     helper_19(buf + 4096, 12);
     helper_19(buf + 8192, 12);
@@ -4112,7 +4131,7 @@ void helper_19(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_19(buf + 0, 15);
     helper_19(buf + 32768, 15);
     helper_19(buf + 65536, 15);
@@ -4170,7 +4189,7 @@ void helper_19(float *buf, int k) {
     }
     return;
   }
-  if (k == 19) {
+  if (depth == 19) {
     helper_19(buf + 0, 18);
     helper_19(buf + 262144, 18);
     for (int j = 0; j < 524288; j += 524288) {
@@ -4190,8 +4209,9 @@ void helper_19(float *buf, int k) {
   }
 }
 
-void helper_20(float *buf, int k) {
-  if (k == 12) {
+void helper_20(float *buf, int depth);
+void helper_20(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -4463,7 +4483,7 @@ void helper_20(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_20(buf + 0, 12);
     helper_20(buf + 4096, 12);
     helper_20(buf + 8192, 12);
@@ -4521,7 +4541,7 @@ void helper_20(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_20(buf + 0, 15);
     helper_20(buf + 32768, 15);
     helper_20(buf + 65536, 15);
@@ -4579,7 +4599,7 @@ void helper_20(float *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     helper_20(buf + 0, 18);
     helper_20(buf + 262144, 18);
     helper_20(buf + 524288, 18);
@@ -4611,8 +4631,9 @@ void helper_20(float *buf, int k) {
   }
 }
 
-void helper_21(float *buf, int k) {
-  if (k == 12) {
+void helper_21(float *buf, int depth);
+void helper_21(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -4884,7 +4905,7 @@ void helper_21(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_21(buf + 0, 12);
     helper_21(buf + 4096, 12);
     helper_21(buf + 8192, 12);
@@ -4942,7 +4963,7 @@ void helper_21(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_21(buf + 0, 15);
     helper_21(buf + 32768, 15);
     helper_21(buf + 65536, 15);
@@ -5000,7 +5021,7 @@ void helper_21(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_21(buf + 0, 18);
     helper_21(buf + 262144, 18);
     helper_21(buf + 524288, 18);
@@ -5060,8 +5081,9 @@ void helper_21(float *buf, int k) {
   }
 }
 
-void helper_22(float *buf, int k) {
-  if (k == 12) {
+void helper_22(float *buf, int depth);
+void helper_22(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -5333,7 +5355,7 @@ void helper_22(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_22(buf + 0, 12);
     helper_22(buf + 4096, 12);
     helper_22(buf + 8192, 12);
@@ -5391,7 +5413,7 @@ void helper_22(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_22(buf + 0, 15);
     helper_22(buf + 32768, 15);
     helper_22(buf + 65536, 15);
@@ -5449,7 +5471,7 @@ void helper_22(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_22(buf + 0, 18);
     helper_22(buf + 262144, 18);
     helper_22(buf + 524288, 18);
@@ -5507,7 +5529,7 @@ void helper_22(float *buf, int k) {
     }
     return;
   }
-  if (k == 22) {
+  if (depth == 22) {
     helper_22(buf + 0, 21);
     helper_22(buf + 2097152, 21);
     for (int j = 0; j < 4194304; j += 4194304) {
@@ -5527,8 +5549,9 @@ void helper_22(float *buf, int k) {
   }
 }
 
-void helper_23(float *buf, int k) {
-  if (k == 12) {
+void helper_23(float *buf, int depth);
+void helper_23(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -5800,7 +5823,7 @@ void helper_23(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_23(buf + 0, 12);
     helper_23(buf + 4096, 12);
     helper_23(buf + 8192, 12);
@@ -5858,7 +5881,7 @@ void helper_23(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_23(buf + 0, 15);
     helper_23(buf + 32768, 15);
     helper_23(buf + 65536, 15);
@@ -5916,7 +5939,7 @@ void helper_23(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_23(buf + 0, 18);
     helper_23(buf + 262144, 18);
     helper_23(buf + 524288, 18);
@@ -5974,7 +5997,7 @@ void helper_23(float *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     helper_23(buf + 0, 21);
     helper_23(buf + 2097152, 21);
     helper_23(buf + 4194304, 21);
@@ -6006,8 +6029,9 @@ void helper_23(float *buf, int k) {
   }
 }
 
-void helper_24(float *buf, int k) {
-  if (k == 12) {
+void helper_24(float *buf, int depth);
+void helper_24(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -6279,7 +6303,7 @@ void helper_24(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_24(buf + 0, 12);
     helper_24(buf + 4096, 12);
     helper_24(buf + 8192, 12);
@@ -6337,7 +6361,7 @@ void helper_24(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_24(buf + 0, 15);
     helper_24(buf + 32768, 15);
     helper_24(buf + 65536, 15);
@@ -6395,7 +6419,7 @@ void helper_24(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_24(buf + 0, 18);
     helper_24(buf + 262144, 18);
     helper_24(buf + 524288, 18);
@@ -6453,7 +6477,7 @@ void helper_24(float *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     helper_24(buf + 0, 21);
     helper_24(buf + 2097152, 21);
     helper_24(buf + 4194304, 21);
@@ -6513,8 +6537,9 @@ void helper_24(float *buf, int k) {
   }
 }
 
-void helper_25(float *buf, int k) {
-  if (k == 12) {
+void helper_25(float *buf, int depth);
+void helper_25(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -6786,7 +6811,7 @@ void helper_25(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_25(buf + 0, 12);
     helper_25(buf + 4096, 12);
     helper_25(buf + 8192, 12);
@@ -6844,7 +6869,7 @@ void helper_25(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_25(buf + 0, 15);
     helper_25(buf + 32768, 15);
     helper_25(buf + 65536, 15);
@@ -6902,7 +6927,7 @@ void helper_25(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_25(buf + 0, 18);
     helper_25(buf + 262144, 18);
     helper_25(buf + 524288, 18);
@@ -6960,7 +6985,7 @@ void helper_25(float *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     helper_25(buf + 0, 21);
     helper_25(buf + 2097152, 21);
     helper_25(buf + 4194304, 21);
@@ -7018,7 +7043,7 @@ void helper_25(float *buf, int k) {
     }
     return;
   }
-  if (k == 25) {
+  if (depth == 25) {
     helper_25(buf + 0, 24);
     helper_25(buf + 16777216, 24);
     for (int j = 0; j < 33554432; j += 33554432) {
@@ -7038,8 +7063,9 @@ void helper_25(float *buf, int k) {
   }
 }
 
-void helper_26(float *buf, int k) {
-  if (k == 12) {
+void helper_26(float *buf, int depth);
+void helper_26(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -7311,7 +7337,7 @@ void helper_26(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_26(buf + 0, 12);
     helper_26(buf + 4096, 12);
     helper_26(buf + 8192, 12);
@@ -7369,7 +7395,7 @@ void helper_26(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_26(buf + 0, 15);
     helper_26(buf + 32768, 15);
     helper_26(buf + 65536, 15);
@@ -7427,7 +7453,7 @@ void helper_26(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_26(buf + 0, 18);
     helper_26(buf + 262144, 18);
     helper_26(buf + 524288, 18);
@@ -7485,7 +7511,7 @@ void helper_26(float *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     helper_26(buf + 0, 21);
     helper_26(buf + 2097152, 21);
     helper_26(buf + 4194304, 21);
@@ -7543,7 +7569,7 @@ void helper_26(float *buf, int k) {
     }
     return;
   }
-  if (k == 26) {
+  if (depth == 26) {
     helper_26(buf + 0, 24);
     helper_26(buf + 16777216, 24);
     helper_26(buf + 33554432, 24);
@@ -7575,8 +7601,9 @@ void helper_26(float *buf, int k) {
   }
 }
 
-void helper_27(float *buf, int k) {
-  if (k == 12) {
+void helper_27(float *buf, int depth);
+void helper_27(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -7848,7 +7875,7 @@ void helper_27(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_27(buf + 0, 12);
     helper_27(buf + 4096, 12);
     helper_27(buf + 8192, 12);
@@ -7906,7 +7933,7 @@ void helper_27(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_27(buf + 0, 15);
     helper_27(buf + 32768, 15);
     helper_27(buf + 65536, 15);
@@ -7964,7 +7991,7 @@ void helper_27(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_27(buf + 0, 18);
     helper_27(buf + 262144, 18);
     helper_27(buf + 524288, 18);
@@ -8022,7 +8049,7 @@ void helper_27(float *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     helper_27(buf + 0, 21);
     helper_27(buf + 2097152, 21);
     helper_27(buf + 4194304, 21);
@@ -8080,7 +8107,7 @@ void helper_27(float *buf, int k) {
     }
     return;
   }
-  if (k == 27) {
+  if (depth == 27) {
     helper_27(buf + 0, 24);
     helper_27(buf + 16777216, 24);
     helper_27(buf + 33554432, 24);
@@ -8140,8 +8167,9 @@ void helper_27(float *buf, int k) {
   }
 }
 
-void helper_28(float *buf, int k) {
-  if (k == 12) {
+void helper_28(float *buf, int depth);
+void helper_28(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -8413,7 +8441,7 @@ void helper_28(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_28(buf + 0, 12);
     helper_28(buf + 4096, 12);
     helper_28(buf + 8192, 12);
@@ -8471,7 +8499,7 @@ void helper_28(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_28(buf + 0, 15);
     helper_28(buf + 32768, 15);
     helper_28(buf + 65536, 15);
@@ -8529,7 +8557,7 @@ void helper_28(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_28(buf + 0, 18);
     helper_28(buf + 262144, 18);
     helper_28(buf + 524288, 18);
@@ -8587,7 +8615,7 @@ void helper_28(float *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     helper_28(buf + 0, 21);
     helper_28(buf + 2097152, 21);
     helper_28(buf + 4194304, 21);
@@ -8645,7 +8673,7 @@ void helper_28(float *buf, int k) {
     }
     return;
   }
-  if (k == 27) {
+  if (depth == 27) {
     helper_28(buf + 0, 24);
     helper_28(buf + 16777216, 24);
     helper_28(buf + 33554432, 24);
@@ -8703,7 +8731,7 @@ void helper_28(float *buf, int k) {
     }
     return;
   }
-  if (k == 28) {
+  if (depth == 28) {
     helper_28(buf + 0, 27);
     helper_28(buf + 134217728, 27);
     for (int j = 0; j < 268435456; j += 268435456) {
@@ -8723,8 +8751,9 @@ void helper_28(float *buf, int k) {
   }
 }
 
-void helper_29(float *buf, int k) {
-  if (k == 12) {
+void helper_29(float *buf, int depth);
+void helper_29(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -8996,7 +9025,7 @@ void helper_29(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_29(buf + 0, 12);
     helper_29(buf + 4096, 12);
     helper_29(buf + 8192, 12);
@@ -9054,7 +9083,7 @@ void helper_29(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_29(buf + 0, 15);
     helper_29(buf + 32768, 15);
     helper_29(buf + 65536, 15);
@@ -9112,7 +9141,7 @@ void helper_29(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_29(buf + 0, 18);
     helper_29(buf + 262144, 18);
     helper_29(buf + 524288, 18);
@@ -9170,7 +9199,7 @@ void helper_29(float *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     helper_29(buf + 0, 21);
     helper_29(buf + 2097152, 21);
     helper_29(buf + 4194304, 21);
@@ -9228,7 +9257,7 @@ void helper_29(float *buf, int k) {
     }
     return;
   }
-  if (k == 27) {
+  if (depth == 27) {
     helper_29(buf + 0, 24);
     helper_29(buf + 16777216, 24);
     helper_29(buf + 33554432, 24);
@@ -9286,7 +9315,7 @@ void helper_29(float *buf, int k) {
     }
     return;
   }
-  if (k == 29) {
+  if (depth == 29) {
     helper_29(buf + 0, 27);
     helper_29(buf + 134217728, 27);
     helper_29(buf + 268435456, 27);
@@ -9318,8 +9347,9 @@ void helper_29(float *buf, int k) {
   }
 }
 
-void helper_30(float *buf, int k) {
-  if (k == 12) {
+void helper_30(float *buf, int depth);
+void helper_30(float *buf, int depth) {
+  if (depth == 12) {
     for (int j = 0; j < 4096; j += 64) {
       for (int k = 0; k < 8; k += 8) {
         __asm__ volatile (
@@ -9591,7 +9621,7 @@ void helper_30(float *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     helper_30(buf + 0, 12);
     helper_30(buf + 4096, 12);
     helper_30(buf + 8192, 12);
@@ -9649,7 +9679,7 @@ void helper_30(float *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     helper_30(buf + 0, 15);
     helper_30(buf + 32768, 15);
     helper_30(buf + 65536, 15);
@@ -9707,7 +9737,7 @@ void helper_30(float *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     helper_30(buf + 0, 18);
     helper_30(buf + 262144, 18);
     helper_30(buf + 524288, 18);
@@ -9765,7 +9795,7 @@ void helper_30(float *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     helper_30(buf + 0, 21);
     helper_30(buf + 2097152, 21);
     helper_30(buf + 4194304, 21);
@@ -9823,7 +9853,7 @@ void helper_30(float *buf, int k) {
     }
     return;
   }
-  if (k == 27) {
+  if (depth == 27) {
     helper_30(buf + 0, 24);
     helper_30(buf + 16777216, 24);
     helper_30(buf + 33554432, 24);
@@ -9881,7 +9911,7 @@ void helper_30(float *buf, int k) {
     }
     return;
   }
-  if (k == 30) {
+  if (depth == 30) {
     helper_30(buf + 0, 27);
     helper_30(buf + 134217728, 27);
     helper_30(buf + 268435456, 27);
@@ -9952,6 +9982,7 @@ inline void double_helper_1(double *buf) {
   }
 }
 
+inline void double_helper_2(double *buf);
 inline void double_helper_2(double *buf) {
   for (int j = 0; j < 4; j += 4) {
     __asm__ volatile (
@@ -9972,6 +10003,7 @@ inline void double_helper_2(double *buf) {
   }
 }
 
+inline void double_helper_3(double *buf);
 inline void double_helper_3(double *buf) {
   for (int j = 0; j < 8; j += 8) {
     for (int k = 0; k < 4; k += 4) {
@@ -10008,6 +10040,7 @@ inline void double_helper_3(double *buf) {
   }
 }
 
+inline void double_helper_4(double *buf);
 inline void double_helper_4(double *buf) {
   for (int j = 0; j < 16; j += 16) {
     for (int k = 0; k < 4; k += 4) {
@@ -10074,6 +10107,7 @@ inline void double_helper_4(double *buf) {
   }
 }
 
+inline void double_helper_5(double *buf);
 inline void double_helper_5(double *buf) {
   for (int j = 0; j < 32; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10204,6 +10238,7 @@ inline void double_helper_5(double *buf) {
   }
 }
 
+inline void double_helper_6(double *buf);
 inline void double_helper_6(double *buf) {
   for (int j = 0; j < 64; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10347,6 +10382,7 @@ inline void double_helper_6(double *buf) {
   }
 }
 
+inline void double_helper_7(double *buf);
 inline void double_helper_7(double *buf) {
   for (int j = 0; j < 128; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10500,6 +10536,7 @@ inline void double_helper_7(double *buf) {
   }
 }
 
+inline void double_helper_8(double *buf);
 inline void double_helper_8(double *buf) {
   for (int j = 0; j < 256; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10677,6 +10714,7 @@ inline void double_helper_8(double *buf) {
   }
 }
 
+inline void double_helper_9(double *buf);
 inline void double_helper_9(double *buf) {
   for (int j = 0; j < 512; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -10867,6 +10905,7 @@ inline void double_helper_9(double *buf) {
   }
 }
 
+inline void double_helper_10(double *buf);
 inline void double_helper_10(double *buf) {
   for (int j = 0; j < 1024; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -11067,6 +11106,7 @@ inline void double_helper_10(double *buf) {
   }
 }
 
+inline void double_helper_11(double *buf);
 inline void double_helper_11(double *buf) {
   for (int j = 0; j < 2048; j += 32) {
     for (int k = 0; k < 4; k += 4) {
@@ -11291,8 +11331,9 @@ inline void double_helper_11(double *buf) {
   }
 }
 
-void double_helper_12(double *buf, int k) {
-  if (k == 11) {
+void double_helper_12(double *buf, int depth);
+void double_helper_12(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -11516,7 +11557,7 @@ void double_helper_12(double *buf, int k) {
     }
     return;
   }
-  if (k == 12) {
+  if (depth == 12) {
     double_helper_12(buf + 0, 11);
     double_helper_12(buf + 2048, 11);
     for (int j = 0; j < 4096; j += 4096) {
@@ -11536,8 +11577,9 @@ void double_helper_12(double *buf, int k) {
   }
 }
 
-void double_helper_13(double *buf, int k) {
-  if (k == 11) {
+void double_helper_13(double *buf, int depth);
+void double_helper_13(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -11761,7 +11803,7 @@ void double_helper_13(double *buf, int k) {
     }
     return;
   }
-  if (k == 13) {
+  if (depth == 13) {
     double_helper_13(buf + 0, 11);
     double_helper_13(buf + 2048, 11);
     double_helper_13(buf + 4096, 11);
@@ -11793,8 +11835,9 @@ void double_helper_13(double *buf, int k) {
   }
 }
 
-void double_helper_14(double *buf, int k) {
-  if (k == 11) {
+void double_helper_14(double *buf, int depth);
+void double_helper_14(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -12018,7 +12061,7 @@ void double_helper_14(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_14(buf + 0, 11);
     double_helper_14(buf + 2048, 11);
     double_helper_14(buf + 4096, 11);
@@ -12078,8 +12121,9 @@ void double_helper_14(double *buf, int k) {
   }
 }
 
-void double_helper_15(double *buf, int k) {
-  if (k == 11) {
+void double_helper_15(double *buf, int depth);
+void double_helper_15(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -12303,7 +12347,7 @@ void double_helper_15(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_15(buf + 0, 11);
     double_helper_15(buf + 2048, 11);
     double_helper_15(buf + 4096, 11);
@@ -12361,7 +12405,7 @@ void double_helper_15(double *buf, int k) {
     }
     return;
   }
-  if (k == 15) {
+  if (depth == 15) {
     double_helper_15(buf + 0, 14);
     double_helper_15(buf + 16384, 14);
     for (int j = 0; j < 32768; j += 32768) {
@@ -12381,8 +12425,9 @@ void double_helper_15(double *buf, int k) {
   }
 }
 
-void double_helper_16(double *buf, int k) {
-  if (k == 11) {
+void double_helper_16(double *buf, int depth);
+void double_helper_16(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -12606,7 +12651,7 @@ void double_helper_16(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_16(buf + 0, 11);
     double_helper_16(buf + 2048, 11);
     double_helper_16(buf + 4096, 11);
@@ -12664,7 +12709,7 @@ void double_helper_16(double *buf, int k) {
     }
     return;
   }
-  if (k == 16) {
+  if (depth == 16) {
     double_helper_16(buf + 0, 14);
     double_helper_16(buf + 16384, 14);
     double_helper_16(buf + 32768, 14);
@@ -12696,8 +12741,9 @@ void double_helper_16(double *buf, int k) {
   }
 }
 
-void double_helper_17(double *buf, int k) {
-  if (k == 11) {
+void double_helper_17(double *buf, int depth);
+void double_helper_17(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -12921,7 +12967,7 @@ void double_helper_17(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_17(buf + 0, 11);
     double_helper_17(buf + 2048, 11);
     double_helper_17(buf + 4096, 11);
@@ -12979,7 +13025,7 @@ void double_helper_17(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_17(buf + 0, 14);
     double_helper_17(buf + 16384, 14);
     double_helper_17(buf + 32768, 14);
@@ -13039,8 +13085,9 @@ void double_helper_17(double *buf, int k) {
   }
 }
 
-void double_helper_18(double *buf, int k) {
-  if (k == 11) {
+void double_helper_18(double *buf, int depth);
+void double_helper_18(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -13264,7 +13311,7 @@ void double_helper_18(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_18(buf + 0, 11);
     double_helper_18(buf + 2048, 11);
     double_helper_18(buf + 4096, 11);
@@ -13322,7 +13369,7 @@ void double_helper_18(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_18(buf + 0, 14);
     double_helper_18(buf + 16384, 14);
     double_helper_18(buf + 32768, 14);
@@ -13380,7 +13427,7 @@ void double_helper_18(double *buf, int k) {
     }
     return;
   }
-  if (k == 18) {
+  if (depth == 18) {
     double_helper_18(buf + 0, 17);
     double_helper_18(buf + 131072, 17);
     for (int j = 0; j < 262144; j += 262144) {
@@ -13400,8 +13447,9 @@ void double_helper_18(double *buf, int k) {
   }
 }
 
-void double_helper_19(double *buf, int k) {
-  if (k == 11) {
+void double_helper_19(double *buf, int depth);
+void double_helper_19(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -13625,7 +13673,7 @@ void double_helper_19(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_19(buf + 0, 11);
     double_helper_19(buf + 2048, 11);
     double_helper_19(buf + 4096, 11);
@@ -13683,7 +13731,7 @@ void double_helper_19(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_19(buf + 0, 14);
     double_helper_19(buf + 16384, 14);
     double_helper_19(buf + 32768, 14);
@@ -13741,7 +13789,7 @@ void double_helper_19(double *buf, int k) {
     }
     return;
   }
-  if (k == 19) {
+  if (depth == 19) {
     double_helper_19(buf + 0, 17);
     double_helper_19(buf + 131072, 17);
     double_helper_19(buf + 262144, 17);
@@ -13773,8 +13821,9 @@ void double_helper_19(double *buf, int k) {
   }
 }
 
-void double_helper_20(double *buf, int k) {
-  if (k == 11) {
+void double_helper_20(double *buf, int depth);
+void double_helper_20(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -13998,7 +14047,7 @@ void double_helper_20(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_20(buf + 0, 11);
     double_helper_20(buf + 2048, 11);
     double_helper_20(buf + 4096, 11);
@@ -14056,7 +14105,7 @@ void double_helper_20(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_20(buf + 0, 14);
     double_helper_20(buf + 16384, 14);
     double_helper_20(buf + 32768, 14);
@@ -14114,7 +14163,7 @@ void double_helper_20(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_20(buf + 0, 17);
     double_helper_20(buf + 131072, 17);
     double_helper_20(buf + 262144, 17);
@@ -14174,8 +14223,9 @@ void double_helper_20(double *buf, int k) {
   }
 }
 
-void double_helper_21(double *buf, int k) {
-  if (k == 11) {
+void double_helper_21(double *buf, int depth);
+void double_helper_21(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -14399,7 +14449,7 @@ void double_helper_21(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_21(buf + 0, 11);
     double_helper_21(buf + 2048, 11);
     double_helper_21(buf + 4096, 11);
@@ -14457,7 +14507,7 @@ void double_helper_21(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_21(buf + 0, 14);
     double_helper_21(buf + 16384, 14);
     double_helper_21(buf + 32768, 14);
@@ -14515,7 +14565,7 @@ void double_helper_21(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_21(buf + 0, 17);
     double_helper_21(buf + 131072, 17);
     double_helper_21(buf + 262144, 17);
@@ -14573,7 +14623,7 @@ void double_helper_21(double *buf, int k) {
     }
     return;
   }
-  if (k == 21) {
+  if (depth == 21) {
     double_helper_21(buf + 0, 20);
     double_helper_21(buf + 1048576, 20);
     for (int j = 0; j < 2097152; j += 2097152) {
@@ -14593,8 +14643,9 @@ void double_helper_21(double *buf, int k) {
   }
 }
 
-void double_helper_22(double *buf, int k) {
-  if (k == 11) {
+void double_helper_22(double *buf, int depth);
+void double_helper_22(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -14818,7 +14869,7 @@ void double_helper_22(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_22(buf + 0, 11);
     double_helper_22(buf + 2048, 11);
     double_helper_22(buf + 4096, 11);
@@ -14876,7 +14927,7 @@ void double_helper_22(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_22(buf + 0, 14);
     double_helper_22(buf + 16384, 14);
     double_helper_22(buf + 32768, 14);
@@ -14934,7 +14985,7 @@ void double_helper_22(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_22(buf + 0, 17);
     double_helper_22(buf + 131072, 17);
     double_helper_22(buf + 262144, 17);
@@ -14992,7 +15043,7 @@ void double_helper_22(double *buf, int k) {
     }
     return;
   }
-  if (k == 22) {
+  if (depth == 22) {
     double_helper_22(buf + 0, 20);
     double_helper_22(buf + 1048576, 20);
     double_helper_22(buf + 2097152, 20);
@@ -15024,8 +15075,9 @@ void double_helper_22(double *buf, int k) {
   }
 }
 
-void double_helper_23(double *buf, int k) {
-  if (k == 11) {
+void double_helper_23(double *buf, int depth);
+void double_helper_23(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -15249,7 +15301,7 @@ void double_helper_23(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_23(buf + 0, 11);
     double_helper_23(buf + 2048, 11);
     double_helper_23(buf + 4096, 11);
@@ -15307,7 +15359,7 @@ void double_helper_23(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_23(buf + 0, 14);
     double_helper_23(buf + 16384, 14);
     double_helper_23(buf + 32768, 14);
@@ -15365,7 +15417,7 @@ void double_helper_23(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_23(buf + 0, 17);
     double_helper_23(buf + 131072, 17);
     double_helper_23(buf + 262144, 17);
@@ -15423,7 +15475,7 @@ void double_helper_23(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_23(buf + 0, 20);
     double_helper_23(buf + 1048576, 20);
     double_helper_23(buf + 2097152, 20);
@@ -15483,8 +15535,9 @@ void double_helper_23(double *buf, int k) {
   }
 }
 
-void double_helper_24(double *buf, int k) {
-  if (k == 11) {
+void double_helper_24(double *buf, int depth);
+void double_helper_24(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -15708,7 +15761,7 @@ void double_helper_24(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_24(buf + 0, 11);
     double_helper_24(buf + 2048, 11);
     double_helper_24(buf + 4096, 11);
@@ -15766,7 +15819,7 @@ void double_helper_24(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_24(buf + 0, 14);
     double_helper_24(buf + 16384, 14);
     double_helper_24(buf + 32768, 14);
@@ -15824,7 +15877,7 @@ void double_helper_24(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_24(buf + 0, 17);
     double_helper_24(buf + 131072, 17);
     double_helper_24(buf + 262144, 17);
@@ -15882,7 +15935,7 @@ void double_helper_24(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_24(buf + 0, 20);
     double_helper_24(buf + 1048576, 20);
     double_helper_24(buf + 2097152, 20);
@@ -15940,7 +15993,7 @@ void double_helper_24(double *buf, int k) {
     }
     return;
   }
-  if (k == 24) {
+  if (depth == 24) {
     double_helper_24(buf + 0, 23);
     double_helper_24(buf + 8388608, 23);
     for (int j = 0; j < 16777216; j += 16777216) {
@@ -15960,8 +16013,9 @@ void double_helper_24(double *buf, int k) {
   }
 }
 
-void double_helper_25(double *buf, int k) {
-  if (k == 11) {
+void double_helper_25(double *buf, int depth);
+void double_helper_25(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -16185,7 +16239,7 @@ void double_helper_25(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_25(buf + 0, 11);
     double_helper_25(buf + 2048, 11);
     double_helper_25(buf + 4096, 11);
@@ -16243,7 +16297,7 @@ void double_helper_25(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_25(buf + 0, 14);
     double_helper_25(buf + 16384, 14);
     double_helper_25(buf + 32768, 14);
@@ -16301,7 +16355,7 @@ void double_helper_25(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_25(buf + 0, 17);
     double_helper_25(buf + 131072, 17);
     double_helper_25(buf + 262144, 17);
@@ -16359,7 +16413,7 @@ void double_helper_25(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_25(buf + 0, 20);
     double_helper_25(buf + 1048576, 20);
     double_helper_25(buf + 2097152, 20);
@@ -16417,7 +16471,7 @@ void double_helper_25(double *buf, int k) {
     }
     return;
   }
-  if (k == 25) {
+  if (depth == 25) {
     double_helper_25(buf + 0, 23);
     double_helper_25(buf + 8388608, 23);
     double_helper_25(buf + 16777216, 23);
@@ -16449,8 +16503,9 @@ void double_helper_25(double *buf, int k) {
   }
 }
 
-void double_helper_26(double *buf, int k) {
-  if (k == 11) {
+void double_helper_26(double *buf, int depth);
+void double_helper_26(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -16674,7 +16729,7 @@ void double_helper_26(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_26(buf + 0, 11);
     double_helper_26(buf + 2048, 11);
     double_helper_26(buf + 4096, 11);
@@ -16732,7 +16787,7 @@ void double_helper_26(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_26(buf + 0, 14);
     double_helper_26(buf + 16384, 14);
     double_helper_26(buf + 32768, 14);
@@ -16790,7 +16845,7 @@ void double_helper_26(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_26(buf + 0, 17);
     double_helper_26(buf + 131072, 17);
     double_helper_26(buf + 262144, 17);
@@ -16848,7 +16903,7 @@ void double_helper_26(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_26(buf + 0, 20);
     double_helper_26(buf + 1048576, 20);
     double_helper_26(buf + 2097152, 20);
@@ -16906,7 +16961,7 @@ void double_helper_26(double *buf, int k) {
     }
     return;
   }
-  if (k == 26) {
+  if (depth == 26) {
     double_helper_26(buf + 0, 23);
     double_helper_26(buf + 8388608, 23);
     double_helper_26(buf + 16777216, 23);
@@ -16966,8 +17021,9 @@ void double_helper_26(double *buf, int k) {
   }
 }
 
-void double_helper_27(double *buf, int k) {
-  if (k == 11) {
+void double_helper_27(double *buf, int depth);
+void double_helper_27(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -17191,7 +17247,7 @@ void double_helper_27(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_27(buf + 0, 11);
     double_helper_27(buf + 2048, 11);
     double_helper_27(buf + 4096, 11);
@@ -17249,7 +17305,7 @@ void double_helper_27(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_27(buf + 0, 14);
     double_helper_27(buf + 16384, 14);
     double_helper_27(buf + 32768, 14);
@@ -17307,7 +17363,7 @@ void double_helper_27(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_27(buf + 0, 17);
     double_helper_27(buf + 131072, 17);
     double_helper_27(buf + 262144, 17);
@@ -17365,7 +17421,7 @@ void double_helper_27(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_27(buf + 0, 20);
     double_helper_27(buf + 1048576, 20);
     double_helper_27(buf + 2097152, 20);
@@ -17423,7 +17479,7 @@ void double_helper_27(double *buf, int k) {
     }
     return;
   }
-  if (k == 26) {
+  if (depth == 26) {
     double_helper_27(buf + 0, 23);
     double_helper_27(buf + 8388608, 23);
     double_helper_27(buf + 16777216, 23);
@@ -17481,7 +17537,7 @@ void double_helper_27(double *buf, int k) {
     }
     return;
   }
-  if (k == 27) {
+  if (depth == 27) {
     double_helper_27(buf + 0, 26);
     double_helper_27(buf + 67108864, 26);
     for (int j = 0; j < 134217728; j += 134217728) {
@@ -17501,8 +17557,9 @@ void double_helper_27(double *buf, int k) {
   }
 }
 
-void double_helper_28(double *buf, int k) {
-  if (k == 11) {
+void double_helper_28(double *buf, int depth);
+void double_helper_28(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -17726,7 +17783,7 @@ void double_helper_28(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_28(buf + 0, 11);
     double_helper_28(buf + 2048, 11);
     double_helper_28(buf + 4096, 11);
@@ -17784,7 +17841,7 @@ void double_helper_28(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_28(buf + 0, 14);
     double_helper_28(buf + 16384, 14);
     double_helper_28(buf + 32768, 14);
@@ -17842,7 +17899,7 @@ void double_helper_28(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_28(buf + 0, 17);
     double_helper_28(buf + 131072, 17);
     double_helper_28(buf + 262144, 17);
@@ -17900,7 +17957,7 @@ void double_helper_28(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_28(buf + 0, 20);
     double_helper_28(buf + 1048576, 20);
     double_helper_28(buf + 2097152, 20);
@@ -17958,7 +18015,7 @@ void double_helper_28(double *buf, int k) {
     }
     return;
   }
-  if (k == 26) {
+  if (depth == 26) {
     double_helper_28(buf + 0, 23);
     double_helper_28(buf + 8388608, 23);
     double_helper_28(buf + 16777216, 23);
@@ -18016,7 +18073,7 @@ void double_helper_28(double *buf, int k) {
     }
     return;
   }
-  if (k == 28) {
+  if (depth == 28) {
     double_helper_28(buf + 0, 26);
     double_helper_28(buf + 67108864, 26);
     double_helper_28(buf + 134217728, 26);
@@ -18048,8 +18105,9 @@ void double_helper_28(double *buf, int k) {
   }
 }
 
-void double_helper_29(double *buf, int k) {
-  if (k == 11) {
+void double_helper_29(double *buf, int depth);
+void double_helper_29(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -18273,7 +18331,7 @@ void double_helper_29(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_29(buf + 0, 11);
     double_helper_29(buf + 2048, 11);
     double_helper_29(buf + 4096, 11);
@@ -18331,7 +18389,7 @@ void double_helper_29(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_29(buf + 0, 14);
     double_helper_29(buf + 16384, 14);
     double_helper_29(buf + 32768, 14);
@@ -18389,7 +18447,7 @@ void double_helper_29(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_29(buf + 0, 17);
     double_helper_29(buf + 131072, 17);
     double_helper_29(buf + 262144, 17);
@@ -18447,7 +18505,7 @@ void double_helper_29(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_29(buf + 0, 20);
     double_helper_29(buf + 1048576, 20);
     double_helper_29(buf + 2097152, 20);
@@ -18505,7 +18563,7 @@ void double_helper_29(double *buf, int k) {
     }
     return;
   }
-  if (k == 26) {
+  if (depth == 26) {
     double_helper_29(buf + 0, 23);
     double_helper_29(buf + 8388608, 23);
     double_helper_29(buf + 16777216, 23);
@@ -18563,7 +18621,7 @@ void double_helper_29(double *buf, int k) {
     }
     return;
   }
-  if (k == 29) {
+  if (depth == 29) {
     double_helper_29(buf + 0, 26);
     double_helper_29(buf + 67108864, 26);
     double_helper_29(buf + 134217728, 26);
@@ -18623,8 +18681,9 @@ void double_helper_29(double *buf, int k) {
   }
 }
 
-void double_helper_30(double *buf, int k) {
-  if (k == 11) {
+void double_helper_30(double *buf, int depth);
+void double_helper_30(double *buf, int depth) {
+  if (depth == 11) {
     for (int j = 0; j < 2048; j += 32) {
       for (int k = 0; k < 4; k += 4) {
         __asm__ volatile (
@@ -18848,7 +18907,7 @@ void double_helper_30(double *buf, int k) {
     }
     return;
   }
-  if (k == 14) {
+  if (depth == 14) {
     double_helper_30(buf + 0, 11);
     double_helper_30(buf + 2048, 11);
     double_helper_30(buf + 4096, 11);
@@ -18906,7 +18965,7 @@ void double_helper_30(double *buf, int k) {
     }
     return;
   }
-  if (k == 17) {
+  if (depth == 17) {
     double_helper_30(buf + 0, 14);
     double_helper_30(buf + 16384, 14);
     double_helper_30(buf + 32768, 14);
@@ -18964,7 +19023,7 @@ void double_helper_30(double *buf, int k) {
     }
     return;
   }
-  if (k == 20) {
+  if (depth == 20) {
     double_helper_30(buf + 0, 17);
     double_helper_30(buf + 131072, 17);
     double_helper_30(buf + 262144, 17);
@@ -19022,7 +19081,7 @@ void double_helper_30(double *buf, int k) {
     }
     return;
   }
-  if (k == 23) {
+  if (depth == 23) {
     double_helper_30(buf + 0, 20);
     double_helper_30(buf + 1048576, 20);
     double_helper_30(buf + 2097152, 20);
@@ -19080,7 +19139,7 @@ void double_helper_30(double *buf, int k) {
     }
     return;
   }
-  if (k == 26) {
+  if (depth == 26) {
     double_helper_30(buf + 0, 23);
     double_helper_30(buf + 8388608, 23);
     double_helper_30(buf + 16777216, 23);
@@ -19138,7 +19197,7 @@ void double_helper_30(double *buf, int k) {
     }
     return;
   }
-  if (k == 29) {
+  if (depth == 29) {
     double_helper_30(buf + 0, 26);
     double_helper_30(buf + 67108864, 26);
     double_helper_30(buf + 134217728, 26);
@@ -19196,7 +19255,7 @@ void double_helper_30(double *buf, int k) {
     }
     return;
   }
-  if (k == 30) {
+  if (depth == 30) {
     double_helper_30(buf + 0, 29);
     double_helper_30(buf + 536870912, 29);
     for (int j = 0; j < 1073741824; j += 1073741824) {
@@ -19216,7 +19275,7 @@ void double_helper_30(double *buf, int k) {
   }
 }
 
-void fht(float *buf, int log_n) {
+void fht_float(float *buf, int log_n) {
   if (log_n == 0) {
   }
   else if (log_n == 1) {
@@ -19312,7 +19371,7 @@ void fht(float *buf, int log_n) {
   else {
   }
 }
-void double_fht(double *buf, int log_n) {
+void fht_double(double *buf, int log_n) {
   if (log_n == 0) {
   }
   else if (log_n == 1) {

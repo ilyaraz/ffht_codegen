@@ -80,7 +80,6 @@ def double_avx_2_etc(from_register_1, from_register_2, to_register_1, to_registe
     res += ident + '"vsubpd %s, %s, %s\\n"\n' % (from_register_2, from_register_1, to_register_2)
     return res
 
-
 def float_plain_step(log_n, it, ident=''):
     if log_n <= 0:
         raise Exception("log_n must be positive")
@@ -238,7 +237,8 @@ def double_avx_composite_step(log_n, from_it, to_it, ident=''):
     return res
 
 def float_avx_greedy_merged(log_n):
-    res  = "inline void helper_%d(float *buf) {\n" % log_n
+    res  = "inline void helper_%d(float *buf);\n" % log_n
+    res += "inline void helper_%d(float *buf) {\n" % log_n
     if log_n < 6:
         res += float_avx_composite_step(log_n, 0, log_n, '  ')
     else:
@@ -252,7 +252,8 @@ def float_avx_greedy_merged(log_n):
     return res
 
 def double_avx_greedy_merged(log_n):
-    res  = "inline void double_helper_%d(double *buf) {\n" % log_n
+    res  = "inline void double_helper_%d(double *buf);\n" % log_n
+    res += "inline void double_helper_%d(double *buf) {\n" % log_n
     if log_n < 5:
         res += double_avx_composite_step(log_n, 0, log_n, '  ')
     else:
@@ -266,8 +267,9 @@ def double_avx_greedy_merged(log_n):
     return res
 
 def float_avx_greedy_merged_recursive(log_n):
-    res  = "void helper_%d(float *buf, int k) {\n" % log_n
-    res += "  if (k == 12) {\n"
+    res  = "void helper_%d(float *buf, int depth);\n" % log_n
+    res += "void helper_%d(float *buf, int depth) {\n" % log_n
+    res += "  if (depth == 12) {\n"
     res += float_avx_composite_step(12, 0, 6, '    ')
     res += float_avx_composite_step(12, 6, 9, '    ')
     res += float_avx_composite_step(12, 9, 12, '    ')
@@ -275,7 +277,7 @@ def float_avx_greedy_merged_recursive(log_n):
     res += "  }\n"
     cur = 15
     while cur <= log_n:
-        res += "  if (k == %d) {\n" % cur
+        res += "  if (depth == %d) {\n" % cur
         for i in range(8):
             res += "    helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (cur - 3)), (cur - 3))
         res += float_avx_composite_step(cur, cur - 3, cur, '    ');
@@ -283,7 +285,7 @@ def float_avx_greedy_merged_recursive(log_n):
         res += "  }\n"
         cur += 3
     if log_n % 3 != 0:
-        res += "  if (k == %d) {\n" % log_n
+        res += "  if (depth == %d) {\n" % log_n
         for i in range(1 << (log_n % 3)):
             res += "    helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (log_n - log_n % 3)), (log_n - log_n % 3))
         res += float_avx_composite_step(log_n, log_n - log_n % 3, log_n, '    ');
@@ -294,8 +296,9 @@ def float_avx_greedy_merged_recursive(log_n):
     return res
 
 def double_avx_greedy_merged_recursive(log_n):
-    res  = "void double_helper_%d(double *buf, int k) {\n" % log_n
-    res += "  if (k == 11) {\n"
+    res  = "void double_helper_%d(double *buf, int depth);\n" % log_n
+    res += "void double_helper_%d(double *buf, int depth) {\n" % log_n
+    res += "  if (depth == 11) {\n"
     res += double_avx_composite_step(11, 0, 5, '    ')
     res += double_avx_composite_step(11, 5, 8, '    ')
     res += double_avx_composite_step(11, 8, 11, '    ')
@@ -303,7 +306,7 @@ def double_avx_greedy_merged_recursive(log_n):
     res += "  }\n"
     cur = 14
     while cur <= log_n:
-        res += "  if (k == %d) {\n" % cur
+        res += "  if (depth == %d) {\n" % cur
         for i in range(8):
             res += "    double_helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (cur - 3)), (cur - 3))
         res += double_avx_composite_step(cur, cur - 3, cur, '    ');
@@ -311,7 +314,7 @@ def double_avx_greedy_merged_recursive(log_n):
         res += "  }\n"
         cur += 3
     if cur != log_n + 3:
-        res += "  if (k == %d) {\n" % log_n
+        res += "  if (depth == %d) {\n" % log_n
         for i in range(1 << (log_n - cur + 3)):
             res += "    double_helper_%d(buf + %d, %d);\n" % (log_n, i * (1 << (cur - 3)), (cur - 3))
         res += double_avx_composite_step(log_n, cur - 3, log_n, '    ');
@@ -336,6 +339,8 @@ def double_plain_unmerged(log_n):
     res += "}\n"
     return res
 
+print '#include "fht.h"\n'
+
 for i in range(1, 31):
     if i < 3:
         print float_plain_unmerged(i)
@@ -352,7 +357,7 @@ for i in range(1, 31):
     else:
         print double_avx_greedy_merged_recursive(i)
 
-dispatch  = "void fht(float *buf, int log_n) {\n"
+dispatch  = "void fht_float(float *buf, int log_n) {\n"
 dispatch += "  if (log_n == 0) {\n"
 dispatch += "  }\n"
 for i in range(1, 31):
@@ -367,7 +372,7 @@ for i in range(1, 31):
 dispatch += "  else {\n"
 dispatch += "  }\n"
 dispatch += "}\n"
-dispatch += "void double_fht(double *buf, int log_n) {\n"
+dispatch += "void fht_double(double *buf, int log_n) {\n"
 dispatch += "  if (log_n == 0) {\n"
 dispatch += "  }\n"
 for i in range(1, 31):
