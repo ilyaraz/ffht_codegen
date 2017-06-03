@@ -1,6 +1,6 @@
 def float_avx_0(register, aux_registers, ident=''):
     """
-    from_register can be the same as to_register, but both must be disjoint from aux_registers
+    register must be disjoint from aux_registers
     """
     if len(aux_registers) < 4:
         raise Exception('need four auxiliary registers')
@@ -13,7 +13,7 @@ def float_avx_0(register, aux_registers, ident=''):
 
 def float_avx_1(register, aux_registers, ident=''):
     """
-    from_register can be the same as to_register, but both must be disjoint from aux_registers
+    register must be disjoint from aux_registers
     """
     if len(aux_registers) < 5:
         raise Exception('need five auxiliary registers')
@@ -27,7 +27,7 @@ def float_avx_1(register, aux_registers, ident=''):
 
 def float_avx_2(register, aux_registers, ident=''):
     """
-    from_register can be the same as to_register, but both must be disjoint from aux_registers
+    register must be disjoint from aux_registers
     """
     if len(aux_registers) < 4:
         raise Exception('need four auxiliary registers')
@@ -38,17 +38,17 @@ def float_avx_2(register, aux_registers, ident=''):
     res += ident + '"vaddps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (aux_registers[2], aux_registers[3], register)
     return res
 
-def float_avx_3_etc(from_register_1, from_register_2, to_register_1, to_register_2, ident=''):
+def float_avx_3_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
     """
     all four registers must be distinct
     """
-    res  = ident + '"vaddps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_2, from_register_1, to_register_1)
-    res += ident + '"vsubps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_2, from_register_1, to_register_2)
+    res  = ident + '"vaddps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_0)
+    res += ident + '"vsubps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_1)
     return res
 
 def double_avx_0(register, aux_registers, ident=''):
     """
-    from_register can be the same as to_register, but both must be disjoint from aux_registers
+    register must be disjoint from aux_registers
     """
     if len(aux_registers) < 4:
         raise Exception('need four auxiliary registers')
@@ -61,7 +61,7 @@ def double_avx_0(register, aux_registers, ident=''):
 
 def double_avx_1(register, aux_registers, ident=''):
     """
-    from_register can be the same as to_register, but both must be disjoint from aux_registers
+    register must be disjoint from aux_registers
     """
     if len(aux_registers) < 4:
         raise Exception('need four auxiliary registers')
@@ -72,12 +72,12 @@ def double_avx_1(register, aux_registers, ident=''):
     res += ident + '"vaddpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (aux_registers[3], aux_registers[0], register)
     return res
 
-def double_avx_2_etc(from_register_1, from_register_2, to_register_1, to_register_2, ident=''):
+def double_avx_2_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
     """
     all four registers must be distinct
     """
-    res  = ident + '"vaddpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_2, from_register_1, to_register_1)
-    res += ident + '"vsubpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_2, from_register_1, to_register_2)
+    res  = ident + '"vaddpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_0)
+    res += ident + '"vsubpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_1)
     return res
 
 def float_plain_step(log_n, it, ident=''):
