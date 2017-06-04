@@ -85,6 +85,73 @@ def double_avx_2_etc(from_register_0, from_register_1, to_register_0, to_registe
     res += ident + '"vsubpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_1)
     return res
 
+def float_sse_0(register, aux_registers, ident=''):
+    """
+    register must be disjoint from aux_registers
+    """
+    if len(aux_registers) < 2:
+        raise Exception('need two auxiliary registers')
+    res  = ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
+    res += ident + '"shufps $160, %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[0])
+    res += ident + '"shufps $245, %%%%%s, %%%%%s\\n"\n' % (register, register)
+    res += ident + '"xorps %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[1])
+    res += ident + '"subps %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[1])
+    res += ident + '"addsubps %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[0])
+    res += ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], register)
+    return res
+
+def float_sse_1(register, aux_registers, ident=''):
+    """
+    register must be disjoint from aux_registers
+    """
+    if len(aux_registers) < 4:
+        raise Exception('need four auxiliary registers')
+    res  = ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
+    res += ident + '"shufps $68, %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[0])
+    res += ident + '"xorps %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[1])
+    res += ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[2])
+    res += ident + '"shufps $14, %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[2])
+    res += ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[3])
+    res += ident + '"shufps $224, %%%%%s, %%%%%s\\n"\n' % (aux_registers[3], aux_registers[1])
+    res += ident + '"addps %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[2])
+    res += ident + '"subps %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[2])
+    res += ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (aux_registers[2], register)
+    return res
+
+def float_sse_2_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
+    """
+    all four registers must be distinct
+    """
+    res  = ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_0)
+    res += ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_1)
+    res += ident + '"addps %%%%%s, %%%%%s\\n"\n' % (from_register_1, to_register_0)
+    res += ident + '"subps %%%%%s, %%%%%s\\n"\n' % (from_register_1, to_register_1)
+    return res
+
+def double_sse_0(register, aux_registers, ident=''):
+    """
+    register must be disjoint from aux_registers
+    """
+    if len(aux_registers) < 2:
+        raise Exception('need two auxiliary registers')
+    res  = ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
+    res += ident + '"haddpd %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[0])
+    res += ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[1])
+    res += ident + '"hsubpd %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[1])
+    res += ident + '"blendpd $1, %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[1])
+    res += ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], register)
+    return res
+
+def double_sse_1_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
+    """
+    all four registers must be distinct
+    """
+    res  = ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_0)
+    res += ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_1)
+    res += ident + '"addpd %%%%%s, %%%%%s\\n"\n' % (from_register_1, to_register_0)
+    res += ident + '"subpd %%%%%s, %%%%%s\\n"\n' % (from_register_1, to_register_1)
+    return res
+
 def plain_step(type_name, buf_name, log_n, it, ident=''):
     if log_n <= 0:
         raise Exception("log_n must be positive")
@@ -166,6 +233,12 @@ def float_avx_composite_step(buf_name, log_n, from_it, to_it, ident=''):
 
 def double_avx_composite_step(buf_name, log_n, from_it, to_it, ident=''):
     return composite_step(buf_name, log_n, from_it, to_it, 2, ['ymm%d' % x for x in range(16)], 'vmovupd', [double_avx_0, double_avx_1], double_avx_2_etc, ident)
+
+def float_sse_composite_step(buf_name, log_n, from_it, to_it, ident=''):
+    return composite_step(buf_name, log_n, from_it, to_it, 2, ['xmm%d' % x for x in range(16)], 'movups', [float_sse_0, float_sse_1], float_sse_2_etc, ident)
+
+def double_sse_composite_step(buf_name, log_n, from_it, to_it, ident=''):
+    return composite_step(buf_name, log_n, from_it, to_it, 1, ['xmm%d' % x for x in range(16)], 'movupd', [double_sse_0], double_sse_1_etc, ident)
 
 def plain_unmerged(type_name, log_n):
     signature = "inline void helper_%s_%d(%s *buf)" % (type_name, log_n, type_name)
