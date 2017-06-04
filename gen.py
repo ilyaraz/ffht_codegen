@@ -1,7 +1,7 @@
 import os
 import sys
 
-max_log_n = 27
+max_log_n = 30
 
 def float_avx_0(register, aux_registers, ident=''):
     """
