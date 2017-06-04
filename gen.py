@@ -311,24 +311,3 @@ if __name__ == '__main__':
         final_code += '}\n'
     with open('fht.c', 'w') as output:
         output.write(final_code)
-    sys.exit(0)
-    res = '#include "fht.h"\n'
-    for (type_name, composite_step_generator) in [('float', float_avx_composite_step), ('double', double_avx_composite_step)]:
-        for i in range(1, max_log_n + 1):
-            try:
-                aux = greedy_merged_recursive(type_name, i, min(i, 10), composite_step_generator)
-                res += aux
-            except Exception:
-                res += plain_unmerged(type_name, i)
-        res += 'int fht_%s(%s *buf, int log_n) {\n' % (type_name, type_name)
-        res += '  if (log_n == 0) {\n'
-        res += '    return 0;\n'
-        res += '  }\n'
-        for i in range(1, max_log_n + 1):
-            res += '  if (log_n == %d) {\n' % i
-            res += '    helper_%s_%d(buf);\n' % (type_name, i)
-            res += '    return 0;\n'
-            res += '  }\n'
-        res += '  return 1;\n'
-        res += '}\n'
-    sys.stdout.write(res)
