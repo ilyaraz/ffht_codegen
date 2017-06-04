@@ -1,6 +1,7 @@
+import os
 import sys
 
-max_log_n = 30
+max_log_n = 27
 
 def float_avx_0(register, aux_registers, ident=''):
     """
@@ -198,12 +199,124 @@ def greedy_merged(type_name, log_n, composite_step):
     res += '}\n'
     return res
 
+def greedy_merged_recursive(type_name, log_n, threshold_step, composite_step):
+    if threshold_step > log_n:
+        raise Exception('threshold_step must be at most log_n')
+    try:
+        composite_step('buf', threshold_step, 0, 0)
+    except Exception:
+        raise Exception('threshold_step is too small: %d' % threshold_step)
+    signature = 'void helper_%s_%d_recursive(%s *buf, int depth)' % (type_name, log_n, type_name)
+    res  = '%s;\n' % signature
+    res += '%s {\n' % signature
+    res += '  if (depth == %d) {\n' % threshold_step
+    cur_it = 0
+    while cur_it < threshold_step:
+        cur_to_it = threshold_step
+        while True:
+            try:
+                composite_step('buf', threshold_step, cur_it, cur_to_it)
+                break
+            except Exception:
+                cur_to_it -= 1
+                continue
+        res += composite_step('buf', threshold_step, cur_it, cur_to_it, '    ')
+        cur_it = cur_to_it
+    res += '    return;\n'
+    res += '  }\n'
+    cur_it = threshold_step
+    while cur_it < log_n:
+        cur_to_it = log_n
+        while True:
+            try:
+                composite_step('buf', cur_to_it, cur_it, cur_to_it)
+                break
+            except Exception:
+                cur_to_it -= 1
+                continue
+        res += '  if (depth == %d) {\n' % cur_to_it
+        for i in range(1 << (cur_to_it - cur_it)):
+            res += '    helper_%s_%d_recursive(buf + %d, %d);\n' % (type_name, log_n, i * (1 << cur_it), cur_it)
+        res += composite_step('buf', cur_to_it, cur_it, cur_to_it, '    ')
+        res += '    return;\n'
+        res += '  }\n'
+        cur_it = cur_to_it
+    res += '}\n'
+    signature = 'void helper_%s_%d(%s *buf)' % (type_name, log_n, type_name)
+    res += '%s;\n' % signature
+    res += '%s {\n' % signature
+    res += '  helper_%s_%d_recursive(buf, %d);\n' % (type_name, log_n, log_n);
+    res += '}\n'
+    return res
+
+def measure_time(code, log_n, type_name, method_name, num_it=3):
+    if num_it % 2 == 0:
+        raise Exception('even number of runs: %d' % num_it)
+    with open('measurements/to_run.h', 'w') as output:
+        output.write(code)
+        output.write('const int log_n = %d;\n' % log_n)
+        signature = 'void run(%s *buf)' % type_name
+        output.write('%s;\n' % signature)
+        output.write('%s {\n' % signature)
+        output.write('  %s(buf);\n' % method_name)
+        output.write('}\n')
+    os.system('cd measurements && make run_%s' % type_name)
+    times = []
+    for it in range(num_it):
+        os.system('./measurements/run_%s' % type_name)
+        with open('time.txt', 'r') as input:
+            times.append(float(input.readline().strip()))
+    times = sorted(times)
+    gap = times[-1] / times[0]
+    final_time = times[num_it / 2]
+    sys.stdout.write('%f %f\n' % (final_time, gap))
+    if gap >= 1.1:
+        sys.stdout.write('WARNING: gap = %f\n' % gap)
+    return final_time
+
 if __name__ == '__main__':
+    final_code = '#include "fht.h"\n'
+    for (type_name, composite_step_generator) in [('float', float_avx_composite_step), ('double', double_avx_composite_step)]:
+        for log_n in range(1, max_log_n + 1):
+            sys.stdout.write('log_n = %d\n' % log_n)
+            times = []
+            try:
+                res = greedy_merged(type_name, log_n, composite_step_generator)
+            except Exception:
+                res = plain_unmerged(type_name, log_n)
+            time = measure_time(res, log_n, type_name, 'helper_%s_%d' % (type_name, log_n))
+            times.append((time, res))
+            sys.stdout.write('log_n = %d; iterative; time = %.20f\n' % (log_n, time))
+            for threshold_step in range(1, log_n + 1):
+                try:
+                    res = greedy_merged_recursive(type_name, log_n, threshold_step, composite_step_generator)
+                    time = measure_time(res, log_n, type_name, 'helper_%s_%d' % (type_name, log_n))
+                    times.append((time, res))
+                    sys.stdout.write('log_n = %d; threshold_step = %d; time = %.20f\n' % (log_n, threshold_step, time))
+                except Exception:
+                    sys.stdout.write('FAIL: %d\n' % threshold_step)
+                (best_time, best_code) = min(times)
+            final_code += best_code
+            sys.stdout.write('best_time = %.20f\n' % best_time)
+        final_code += 'int fht_%s(%s *buf, int log_n) {\n' % (type_name, type_name)
+        final_code += '  if (log_n == 0) {\n'
+        final_code += '    return 0;\n'
+        final_code += '  }\n'
+        for i in range(1, max_log_n + 1):
+            final_code += '  if (log_n == %d) {\n' % i
+            final_code += '    helper_%s_%d(buf);\n' % (type_name, i)
+            final_code += '    return 0;\n'
+            final_code += '  }\n'
+        final_code += '  return 1;\n'
+        final_code += '}\n'
+    with open('fht.c', 'w') as output:
+        output.write(final_code)
+    sys.exit(0)
     res = '#include "fht.h"\n'
     for (type_name, composite_step_generator) in [('float', float_avx_composite_step), ('double', double_avx_composite_step)]:
         for i in range(1, max_log_n + 1):
             try:
-                aux = greedy_merged(type_name, i, composite_step_generator)
+                aux = greedy_merged_recursive(type_name, i, min(i, 10), composite_step_generator)
                 res += aux
             except Exception:
                 res += plain_unmerged(type_name, i)
@@ -218,4 +331,4 @@ if __name__ == '__main__':
             res += '  }\n'
         res += '  return 1;\n'
         res += '}\n'
-    print res,
+    sys.stdout.write(res)

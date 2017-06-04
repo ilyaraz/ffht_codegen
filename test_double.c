@@ -24,7 +24,7 @@ void dumb_fht(double *buf, int log_n) {
 
 int main(void) {
     srand(4057218);
-    for (int log_n = 1; log_n <= 30; ++log_n) {
+    for (int log_n = 1; log_n <= 27; ++log_n) {
         printf("%d ", log_n);
         int n = 1 << log_n;
         void *buf = malloc(sizeof(double) * n + 32);
