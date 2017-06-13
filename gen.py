@@ -382,5 +382,5 @@ if __name__ == '__main__':
             final_code += '  }\n'
         final_code += '  return 1;\n'
         final_code += '}\n'
-    with open('fht.c', 'w') as output:
+    with open('fht_avx.c', 'w') as output:
         output.write(final_code)
