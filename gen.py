@@ -3,12 +3,16 @@ import sys
 
 max_log_n = 30
 
+def is_distinct(l):
+    return len(set(l)) == len(l)
+
 def float_avx_0(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 4:
-        raise Exception('need four auxiliary registers')
+        raise Exception('float_avx_0 needs at least four auxiliary registers')
     res  = ident + '"vpermilps $160, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
     res += ident + '"vpermilps $245, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[1])
     res += ident + '"vxorps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (aux_registers[2], aux_registers[2], aux_registers[2])
@@ -17,11 +21,12 @@ def float_avx_0(register, aux_registers, ident=''):
     return res
 
 def float_avx_1(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 5:
-        raise Exception('need five auxiliary registers')
+        raise Exception('float_avx_1 needs at least five auxiliary registers')
     res  = ident + '"vpermilps $68, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
     res += ident + '"vpermilps $238, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[1])
     res += ident + '"vxorps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (aux_registers[2], aux_registers[2], aux_registers[2])
@@ -31,11 +36,12 @@ def float_avx_1(register, aux_registers, ident=''):
     return res
 
 def float_avx_2(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 4:
-        raise Exception('need four auxiliary registers')
+        raise Exception('float_avx_2 needs at least four auxiliary registers')
     res  = ident + '"vxorps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[0], aux_registers[0])
     res += ident + '"vsubps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0], aux_registers[1])
     res += ident + '"vperm2f128 $0, %%%%%s, %%%%%s, %%%%%s\\n"\n' % (register, register, aux_registers[2])
@@ -44,19 +50,19 @@ def float_avx_2(register, aux_registers, ident=''):
     return res
 
 def float_avx_3_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
-    """
-    all four registers must be distinct
-    """
+    if not is_distinct([from_register_0, from_register_1, to_register_0, to_register_1]):
+        raise Exception('four registers must be distinct')
     res  = ident + '"vaddps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_0)
     res += ident + '"vsubps %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_1)
     return res
 
 def double_avx_0(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 4:
-        raise Exception('need four auxiliary registers')
+        raise Exception('double_avx_0 needs at least four auxiliary registers')
     res  = ident + '"vpermilpd $0, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
     res += ident + '"vpermilpd $15, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[1])
     res += ident + '"vxorpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (aux_registers[2], aux_registers[2], aux_registers[2])
@@ -65,11 +71,12 @@ def double_avx_0(register, aux_registers, ident=''):
     return res
 
 def double_avx_1(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 4:
-        raise Exception('need four auxiliary registers')
+        raise Exception('double_avx_1 needs at least four auxiliary registers')
     res  = ident + '"vperm2f128 $0, %%%%%s, %%%%%s, %%%%%s\\n"\n' % (register, register, aux_registers[0])
     res += ident + '"vxorpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[1], aux_registers[1])
     res += ident + '"vsubpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[1], aux_registers[2])
@@ -78,19 +85,19 @@ def double_avx_1(register, aux_registers, ident=''):
     return res
 
 def double_avx_2_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
-    """
-    all four registers must be distinct
-    """
+    if not is_distinct([from_register_0, from_register_1, to_register_0, to_register_1]):
+        raise Exception('four registers must be distinct')
     res  = ident + '"vaddpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_0)
     res += ident + '"vsubpd %%%%%s, %%%%%s, %%%%%s\\n"\n' % (from_register_1, from_register_0, to_register_1)
     return res
 
 def float_sse_0(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 2:
-        raise Exception('need two auxiliary registers')
+        raise Exception('float_sse_0 needs at least two auxiliary registers')
     res  = ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
     res += ident + '"shufps $160, %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[0])
     res += ident + '"shufps $245, %%%%%s, %%%%%s\\n"\n' % (register, register)
@@ -101,11 +108,12 @@ def float_sse_0(register, aux_registers, ident=''):
     return res
 
 def float_sse_1(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 4:
-        raise Exception('need four auxiliary registers')
+        raise Exception('float_sse_1 needs at least four auxiliary registers')
     res  = ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
     res += ident + '"shufps $68, %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[0])
     res += ident + '"xorps %%%%%s, %%%%%s\\n"\n' % (aux_registers[1], aux_registers[1])
@@ -119,9 +127,8 @@ def float_sse_1(register, aux_registers, ident=''):
     return res
 
 def float_sse_2_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
-    """
-    all four registers must be distinct
-    """
+    if not is_distinct([from_register_0, from_register_1, to_register_0, to_register_1]):
+        raise Exception('four registers must be distinct')
     res  = ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_0)
     res += ident + '"movaps %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_1)
     res += ident + '"addps %%%%%s, %%%%%s\\n"\n' % (from_register_1, to_register_0)
@@ -129,11 +136,12 @@ def float_sse_2_etc(from_register_0, from_register_1, to_register_0, to_register
     return res
 
 def double_sse_0(register, aux_registers, ident=''):
-    """
-    register must be disjoint from aux_registers
-    """
+    if not is_distinct(aux_registers):
+        raise Exception('auxiliary registers must be distinct')
+    if register in aux_registers:
+        raise Exception('the main register can\'t be one of the auxiliary ones')
     if len(aux_registers) < 2:
-        raise Exception('need two auxiliary registers')
+        raise Exception('double_sse_0 needs at least two auxiliary registers')
     res  = ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[0])
     res += ident + '"haddpd %%%%%s, %%%%%s\\n"\n' % (aux_registers[0], aux_registers[0])
     res += ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (register, aux_registers[1])
@@ -143,9 +151,8 @@ def double_sse_0(register, aux_registers, ident=''):
     return res
 
 def double_sse_1_etc(from_register_0, from_register_1, to_register_0, to_register_1, ident=''):
-    """
-    all four registers must be distinct
-    """
+    if not is_distinct([from_register_0, from_register_1, to_register_0, to_register_1]):
+        raise Exception('four registers must be distinct')
     res  = ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_0)
     res += ident + '"movapd %%%%%s, %%%%%s\\n"\n' % (from_register_0, to_register_1)
     res += ident + '"addpd %%%%%s, %%%%%s\\n"\n' % (from_register_1, to_register_0)
