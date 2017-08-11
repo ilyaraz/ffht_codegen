@@ -340,10 +340,14 @@ def measure_time(code, log_n, type_name, method_name, num_it=3):
         output.write('%s {\n' % signature)
         output.write('  %s(buf);\n' % method_name)
         output.write('}\n')
-    os.system('cd measurements && make run_%s' % type_name)
+    code = os.system('cd measurements && make run_%s' % type_name)
+    if code != 0:
+        raise Exception('bad exit code')
     times = []
     for it in range(num_it):
-        os.system('./measurements/run_%s' % type_name)
+        code = os.system('./measurements/run_%s' % type_name)
+        if code != 0:
+            raise Exception('bad exit code')
         with open('time.txt', 'r') as input:
             times.append(float(input.readline().strip()))
     times = sorted(times)
