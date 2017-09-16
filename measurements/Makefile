@@ -1,8 +1,13 @@
-CC = gcc
-CFLAGS = -O3 -march=native -std=c99 -pedantic -Wall -Wextra -Wshadow -Wpointer-arith -Wcast-qual -Wstrict-prototypes -Wmissing-prototypes
+CXX=g++
+CXX_FLAGS=-O3 -Wall -march=native -std=c++11 -I../../benchmark-1.2.0/include -L../../benchmark-1.2.0/src -lbenchmark -lpthread
 
-run_float: run_float.c to_run.h
-	$(CC) run_float.c -o run_float $(CFLAGS)
+.PHONY: run_float run_double clean
 
-run_double: run_double.c to_run.h
-	$(CC) run_double.c -o run_double $(CFLAGS)
+run_float:
+	$(CXX) run_float.cpp -o run_float $(CXX_FLAGS)
+
+run_double:
+	$(CXX) run_double.cpp -o run_double $(CXX_FLAGS)
+
+clean:
+	rm -rf run_float run_double
