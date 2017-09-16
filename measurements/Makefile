@@ -1,5 +1,5 @@
 CXX=g++
-CXX_FLAGS=-O3 -Wall -march=native -std=c++11 -I../../benchmark-1.2.0/include -L../../benchmark-1.2.0/src -lbenchmark -lpthread
+CXX_FLAGS=-O3 -Wall -march=native -std=c++11 -I../external/benchmark/include -L../external/benchmark/src -lbenchmark -lpthread
 
 .PHONY: run_float run_double clean
 

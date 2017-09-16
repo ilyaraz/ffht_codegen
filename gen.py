@@ -533,6 +533,7 @@ def measure_time(code, log_n, type_name, method_name, num_it=3):
 
 if __name__ == '__main__':
     final_code = '#include "fht.h"\n'
+    hall_of_fame = []
     for (type_name,
          composite_step_generator) in [('float', float_avx_composite_step),
                                        ('double', double_avx_composite_step)]:
@@ -566,7 +567,8 @@ if __name__ == '__main__':
                         (log_n, threshold_step, time))
                 except Exception:
                     sys.stdout.write('FAIL: %d\n' % threshold_step)
-                (best_time, best_code, best_desc) = min(times)
+            (best_time, best_code, best_desc) = min(times)
+            hall_of_fame.append((type_name, log_n, best_time, best_desc))
             final_code += best_code
             sys.stdout.write('log_n = %d; best_time = %.10e; %s\n' %
                              (log_n, best_time, best_desc))
@@ -584,3 +586,10 @@ if __name__ == '__main__':
         final_code += '}\n'
     with open('fht_avx.c', 'w') as output:
         output.write(final_code)
+    sys.stdout.write('hall of fame\n')
+    with open('hall_of_fame_avx.txt', 'w') as hof:
+        for (type_name, log_n, best_time, best_desc) in hall_of_fame:
+            s = 'type_name = %s; log_n = %d; best_time = %.10e; best_desc = %s\n' % (
+                type_name, log_n, best_time, best_desc)
+            sys.stdout.write(s)
+            hof.write(s)
